@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table
+@Table(name = "contact_informations")
 public class ContactInformation implements Serializable{
 
 	 private static final long serialVersionUID = 1L;

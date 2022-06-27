@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table
-@Entity
+@Entity(name = "people")
 public class Person implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -71,7 +71,6 @@ public class Person implements Serializable{
 	@JsonIgnore
 	private Employeer employeer;
 	
-	
 	//Configuration for person in friend entity
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
@@ -91,5 +90,12 @@ public class Person implements Serializable{
 	@OneToOne(mappedBy = "person")
 	@JsonIgnore
 	private Resume resume;
+	
+	//Configuration for sharedVacancies
+	@OneToMany(mappedBy = "person")
+	@JsonIgnore
+	private List<SharedVacancy> sharedVacancies;
+	
+	
 	
 }

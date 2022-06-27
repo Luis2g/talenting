@@ -2,7 +2,6 @@ package mx.edu.utez.talenting.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,9 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
-@Table
-public class PostedVacancy implements Serializable {
+@Table(name = "sharedVacancies")
+public class SharedVacancy implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -21,18 +21,17 @@ public class PostedVacancy implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(nullable = false)
-	private boolean taken;
-	
-	//Foreign key for vacancy
+	//Foreign key for vacancies
 	@ManyToOne
-	@JoinColumn(name = "vacancy", nullable = false)
+	@JoinColumn(name = "vacancy")
 	private Vacancy vacancy;
 	
-	//Foreign key for employeers
+	//Foreign key for people
 	@ManyToOne
-	@JoinColumn(name = "employeer", nullable = false)
-	private Employeer employeer;
+	@JoinColumn(name = "person")
+	private Person person;
+	
+	
+	
 	
 }
- 

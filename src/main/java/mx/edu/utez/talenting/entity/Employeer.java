@@ -16,8 +16,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Table
+
 @Entity
+@Table(name = "employeers")
 public class Employeer implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -71,19 +72,10 @@ public class Employeer implements Serializable{
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	public List<PostedVacancy> getPostedVacancies() {
-		return postedVacancies;
-	}
-	public void setPostedVacancies(List<PostedVacancy> postedVacancies) {
-		this.postedVacancies = postedVacancies;
-	}
 
-
-
-	//Configuration for posted_vacancies
+	//Configuration for vacancies
 	@OneToMany(mappedBy = "employeer")
 	@JsonIgnore
-	private List<PostedVacancy> postedVacancies;
-	
+	private List<Vacancy> vacancies;
 	
 }
