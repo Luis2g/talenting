@@ -26,12 +26,12 @@ public class ApplierInVacancy implements Serializable {
 	
 	//Foreign key for vacancies
 	@ManyToOne
-	@JoinColumn(name = "vacancy")
+	@JoinColumn(name = "vacancy", nullable = false)
 	private Vacancy vacancy;
 	
 	//Foreign key for people
 	@ManyToOne
-	@JoinColumn(name = "person")
+	@JoinColumn(name = "person", nullable = false)
 	private Person person;
 	
 }

@@ -26,7 +26,7 @@ public class Benefit implements Serializable{
 	
 	//Foreign key for vacancies
 	@ManyToOne
-	@JoinColumn(name = "vacancy")
+	@JoinColumn(name = "vacancy", nullable = false)
 	private Vacancy vacancy;
 	
 }
