@@ -30,7 +30,7 @@ public class Language implements Serializable {
 	
 	//Foreign key for resume
 	@ManyToOne
-	@JoinColumn(name = "resume")
+	@JoinColumn(name = "resume", nullable = false)
 	private Resume resume;
 
 	public long getId() {
