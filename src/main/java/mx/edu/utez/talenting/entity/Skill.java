@@ -26,7 +26,7 @@ public class Skill implements Serializable{
 	
 	//Foreign key for skills
 	@ManyToOne
-	@JoinColumn(name = "resume")
+	@JoinColumn(name = "resume", nullable = false)
 	private Resume resume;
 	
 	

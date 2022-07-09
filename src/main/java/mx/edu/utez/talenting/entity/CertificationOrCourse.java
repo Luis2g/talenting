@@ -1,6 +1,7 @@
 package mx.edu.utez.talenting.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,8 +28,18 @@ public class CertificationOrCourse implements Serializable {
 	@Column(nullable = false)
 	private String name;
 	
-	@Column(nullable = false)
+	@Column
 	private int hours;
+	
+	@Column(nullable = false)
+	private String nameOfTheInstitudeThatIssuesIt;
+	
+	// These two attributes look way too similar but the aren't the same
+	@Column(name = "expiration_date")
+	private Date expirationDate;
+	
+	@Column(name = "expedition_date", nullable = false)
+	private Date expeditionDate;
 	
 	//Foreign key for resume
 	@ManyToOne
@@ -78,6 +89,32 @@ public class CertificationOrCourse implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public String getNameOfTheInstitudeThatIssuesIt() {
+		return nameOfTheInstitudeThatIssuesIt;
+	}
+
+	public void setNameOfTheInstitudeThatIssuesIt(String nameOfTheInstitudeThatIssuesIt) {
+		this.nameOfTheInstitudeThatIssuesIt = nameOfTheInstitudeThatIssuesIt;
+	}
+
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
+	public Date getExpeditionDate() {
+		return expeditionDate;
+	}
+
+	public void setExpeditionDate(Date expeditionDate) {
+		this.expeditionDate = expeditionDate;
+	}
+
+	
 	
 	
 }
