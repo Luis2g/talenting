@@ -29,4 +29,33 @@ public class Benefit implements Serializable{
 	@JoinColumn(name = "vacancy", nullable = false)
 	private Vacancy vacancy;
 	
+	public Benefit (String name, Vacancy vacancy) {
+		this.name = name;
+		this.vacancy = vacancy; 
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Vacancy getVacancy() {
+		return vacancy;
+	}
+
+	public void setVacancy(Vacancy vacancy) {
+		this.vacancy = vacancy;
+	}
+	
 }

@@ -3,7 +3,6 @@ package mx.edu.utez.talenting.dto;
 import java.io.Serializable;
 
 import mx.edu.utez.talenting.entity.Employeer;
-import mx.edu.utez.talenting.entity.Person;
 import mx.edu.utez.talenting.entity.User;
 
 public class UserDTO implements Serializable{
