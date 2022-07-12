@@ -44,7 +44,7 @@ public class Vacancy implements Serializable {
 	private double minimumSalary;
 	
 	@Column(name = "maximum_salary", nullable = false)
-	private double maximanSalary;
+	private double maximumSalary;
 	
 	@Column(name = "payment_frecuency", nullable = false)
 	private String paymentFrecuency;
@@ -76,5 +76,131 @@ public class Vacancy implements Serializable {
 	@OneToMany(mappedBy = "vacancy")
 	@JsonIgnore
 	private List<SharedVacancy> sharedVacancies;
+	
+	public Vacancy() {}
+	
+	public Vacancy (long id) {
+		this.id = id;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getStateInWhichIsAvailable() {
+		return stateInWhichIsAvailable;
+	}
+
+	public void setStateInWhichIsAvailable(String stateInWhichIsAvailable) {
+		this.stateInWhichIsAvailable = stateInWhichIsAvailable;
+	}
+
+	public String getModality() {
+		return modality;
+	}
+
+	public void setModality(String modality) {
+		this.modality = modality;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public double getMinimumSalary() {
+		return minimumSalary;
+	}
+
+	public void setMinimumSalary(double minimumSalary) {
+		this.minimumSalary = minimumSalary;
+	}
+
+	public double getMaximumSalary() {
+		return maximumSalary;
+	}
+
+	public void setMaximumSalary(double maximumSalary) {
+		this.maximumSalary = maximumSalary;
+	}
+
+	public String getPaymentFrecuency() {
+		return paymentFrecuency;
+	}
+
+	public void setPaymentFrecuency(String paymentFrecuency) {
+		this.paymentFrecuency = paymentFrecuency;
+	}
+
+	public String getValidityDate() {
+		return validityDate;
+	}
+
+	public void setValidityDate(String validityDate) {
+		this.validityDate = validityDate;
+	}
+
+	public List<Benefit> getBenefit() {
+		return benefit;
+	}
+
+	public void setBenefit(List<Benefit> benefit) {
+		this.benefit = benefit;
+	}
+
+	public List<ApplierInVacancy> getApplierInVacancy() {
+		return applierInVacancy;
+	}
+
+	public void setApplierInVacancy(List<ApplierInVacancy> applierInVacancy) {
+		this.applierInVacancy = applierInVacancy;
+	}
+
+	public List<FavoriteVacancy> getFavoriteVacancy() {
+		return favoriteVacancy;
+	}
+
+	public void setFavoriteVacancy(List<FavoriteVacancy> favoriteVacancy) {
+		this.favoriteVacancy = favoriteVacancy;
+	}
+
+	public Employeer getEmployeer() {
+		return employeer;
+	}
+
+	public void setEmployeer(Employeer employeer) {
+		this.employeer = employeer;
+	}
+
+	public List<SharedVacancy> getSharedVacancies() {
+		return sharedVacancies;
+	}
+
+	public void setSharedVacancies(List<SharedVacancy> sharedVacancies) {
+		this.sharedVacancies = sharedVacancies;
+	}
 	
 }
