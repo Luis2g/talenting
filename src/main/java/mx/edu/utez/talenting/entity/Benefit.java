@@ -1,4 +1,4 @@
-package mx.edu.utez.talenting.entity;
+package mx.edu.utez.talenting.entity;	
 
 import java.io.Serializable;
 
@@ -28,6 +28,10 @@ public class Benefit implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "vacancy", nullable = false)
 	private Vacancy vacancy;
+	
+	public Benefit () {
+		
+	}
 	
 	public Benefit (String name, Vacancy vacancy) {
 		this.name = name;

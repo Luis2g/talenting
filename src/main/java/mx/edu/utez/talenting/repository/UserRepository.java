@@ -8,4 +8,6 @@ import mx.edu.utez.talenting.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+	User findByUsernameAndPassword(String username, String password);
+	
 }

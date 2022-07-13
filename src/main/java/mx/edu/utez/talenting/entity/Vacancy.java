@@ -52,6 +52,9 @@ public class Vacancy implements Serializable {
 	@Column(name = "validity_date", nullable = false)
 	private String validityDate;
 	
+	@Column(nullable = false)
+	private boolean status;
+	
 	//Configuration for benefits
 	@OneToMany(mappedBy = "vacancy")
 	@JsonIgnore
@@ -81,6 +84,14 @@ public class Vacancy implements Serializable {
 	
 	public Vacancy (long id) {
 		this.id = id;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	public long getId() {
