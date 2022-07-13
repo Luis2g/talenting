@@ -22,25 +22,7 @@ public class BenefitController {
 	@Autowired
 	private BenefitService benefitSer;
 	
-	@GetMapping("/benefits")
-	public List<Benefit> list(){
-		return benefitSer.getAll();
-	}
-	
-	@GetMapping("/benefits/{id}")
-	public Benefit edit(@PathVariable("id") long id) {
-		return benefitSer.getOne(id);
-	}
-	
-	@PutMapping("/benefits")
-	public Benefit update(@RequestBody Benefit benefit) {
-		return benefitSer.saveOrUpdate(benefit);
-	}
-	
-	@DeleteMapping("/benefits")
-	public void delete(@RequestParam("id") long id) {
-		benefitSer.remove(id);
-	}
+
 
 	
 }
