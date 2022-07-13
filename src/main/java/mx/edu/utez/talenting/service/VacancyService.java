@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mx.edu.utez.talenting.entity.Employeer;
 import mx.edu.utez.talenting.entity.Vacancy;
 import mx.edu.utez.talenting.repository.VacancyRepository;
 
@@ -14,8 +15,8 @@ public class VacancyService {
 	@Autowired
 	private VacancyRepository vacancyRepo;
 	
-	public List<Vacancy> getAll(){
-		return vacancyRepo.findAll();
+	public List<Vacancy> getByEmployeer(Employeer employeer){
+		return vacancyRepo.findByEmployeer(employeer);
 	}
 	
 	public Vacancy getOne(long id) {

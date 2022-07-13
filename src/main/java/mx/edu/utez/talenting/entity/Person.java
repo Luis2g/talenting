@@ -3,8 +3,10 @@ package mx.edu.utez.talenting.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,6 +38,12 @@ public class Person implements Serializable{
 	@Column(nullable = false)
 	private String dateOfBirth;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -62,7 +70,7 @@ public class Person implements Serializable{
 	}
 	
 	//Foreign key for contact_information
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinColumn(name = "contactInformation", unique = true)
 	private ContactInformation contactInformation;
 	
@@ -95,7 +103,28 @@ public class Person implements Serializable{
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
 	private List<SharedVacancy> sharedVacancies;
+
+	public ContactInformation getContactInformation() {
+		return contactInformation;
+	}
 	
+	public void setContactInformation(ContactInformation contactInformation) {
+		this.contactInformation = contactInformation;
+	}
+	
+	//Configuration for User
+	@OneToOne(mappedBy = "person")
+	@JsonIgnore
+	private User user;
+	
+	
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", surname=" + surname + ", secondSurname=" + secondSurname
+				+ ", dateOfBirth=" + dateOfBirth + ", contactInformation=" + contactInformation + ", employeer="
+				+ employeer + ", friends=" + friends + ", persons=" + persons + ", favoritesVacancies="
+				+ favoritesVacancies + ", resume=" + resume + ", sharedVacancies=" + sharedVacancies + "]";
+	}
 	
 	
 }
