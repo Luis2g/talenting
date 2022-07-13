@@ -25,7 +25,7 @@ public class Employeer implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	private String companyName;
 	private String stateTheCompanyIsIn;
 	private String rolInCompany;
@@ -34,6 +34,13 @@ public class Employeer implements Serializable{
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "person_id", nullable = false, unique = true)
 	private Person person;
+	
+	public Employeer () {
+		
+	}
+	public Employeer (long id) {
+		this.id = id;
+	}
 	
 	public String getCompanyName() {
 		return companyName;
@@ -54,10 +61,10 @@ public class Employeer implements Serializable{
 		this.rolInCompany = rolInCompany;
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getRolInCompany() {
