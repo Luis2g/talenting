@@ -31,7 +31,29 @@ public class SharedVacancy implements Serializable {
 	@JoinColumn(name = "person")
 	private Person person;
 	
-	
-	
+	public SharedVacancy() {
+		
+	}
+	public SharedVacancy(long id) {
+		this.id = id;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public Vacancy getVacancy() {
+		return vacancy;
+	}
+	public void setVacancy(Vacancy vacancy) {
+		this.vacancy = vacancy;
+	}
+	public Person getPerson() {
+		return person;
+	}
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 	
 }
