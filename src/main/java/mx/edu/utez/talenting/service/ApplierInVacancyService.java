@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.edu.utez.talenting.entity.ApplierInVacancy;
+import mx.edu.utez.talenting.entity.Person;
 import mx.edu.utez.talenting.repository.ApplierInVacancyRepository;
 
 @Service
@@ -13,6 +14,10 @@ public class ApplierInVacancyService {
 	
 	@Autowired
 	private ApplierInVacancyRepository applierInVacancyRepository;
+	
+	public List<ApplierInVacancy> findByPerson(Person person){
+		return applierInVacancyRepository.findByPerson(person);
+	}
 	
 	public List<ApplierInVacancy> getAll() {
 		return applierInVacancyRepository.findAll();

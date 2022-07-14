@@ -3,9 +3,11 @@ package mx.edu.utez.talenting.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import mx.edu.utez.talenting.service.ApplierInVacancyService;
 
 @RestController
 @RequestMapping("/talenting")
+@CrossOrigin(origins = "http://127.0.0.1:8081")
 public class ApplierInVacancyController {
 	
 	@Autowired
@@ -37,9 +40,14 @@ public class ApplierInVacancyController {
 		return applierInVacancySer.saveOrUpdate(applierInVacancy);
 	}
 	
+	@PostMapping("/appliersInVacancies")
+	public ApplierInVacancy save(@RequestBody ApplierInVacancy applierInVacancy) {
+		return applierInVacancySer.saveOrUpdate(applierInVacancy);
+	}
+	
 	@DeleteMapping("/appliersInVacancies")
-	public void delete(@RequestParam("id") long id) {
-		applierInVacancySer.remove(id);
+	public void delete(@RequestParam("vacancyId") long vacancyId) {
+		applierInVacancySer.remove(vacancyId);
 	}
 
 	
