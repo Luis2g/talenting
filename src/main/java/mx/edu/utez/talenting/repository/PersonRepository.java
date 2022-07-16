@@ -25,6 +25,13 @@ public interface PersonRepository extends JpaRepository<Person, Long>{
 	@Query(value="SELECT * FROM people P JOIN shared_vacancies SV ON P.id = SV.person JOIN vacancies V ON SV.vacancy = V.id WHERE V.id = :vacancyId", nativeQuery=true)
 	List<Person> getPeopleWhoSharedIt(long vacancyId);
 	
+	
+	@Modifying
+	@Transactional
+	@Query(value="SELECT * FROM people P LEFT JOIN employeers EM ON P.id = EM.person_id WHERE P.id NOT IN (( SELECT friend FROM ( SELECT friend FROM friends WHERE person = :idIn AND status = 1 ) AS tableOne )) \n"
+			+ "AND P.id NOT IN (( SELECT person FROM ( SELECT person FROM friends WHERE friend = :idIn AND status = 1 ) AS tableTwo )) AND P.id != :idIn AND EM.id IS NULL", nativeQuery=true)
+	List<Person> getPeopleToAddAsFriends(long idIn);
+	
 
 
 }
