@@ -41,7 +41,7 @@ public class ApplierInVacancyController {
 	}
 	
 	@PostMapping("/appliersInVacancies")
-	public ApplierInVacancy save(@RequestBody ApplierInVacancy applierInVacancy) {
+	public ApplierInVacancy save(@RequestBody ApplierInVacancy applierInVacancy) {		
 		return applierInVacancySer.saveOrUpdate(applierInVacancy);
 	}
 	

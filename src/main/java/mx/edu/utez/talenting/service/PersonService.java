@@ -30,4 +30,12 @@ public class PersonService {
 		personRepo.deleteById(id);
 	}
 	
+	public List<Person> getFriends(long id){
+		return personRepo.getFriends(id);
+	}
+	
+	public List<Person> getPeopleWhoSharedIt(long vacancyId){
+		return personRepo.getPeopleWhoSharedIt(vacancyId);
+	}
+	
 }
