@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "appliers_in_vacancies")
 public class ApplierInVacancy implements Serializable {
@@ -33,6 +35,16 @@ public class ApplierInVacancy implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "person", nullable = false)
 	private Person person;
+	
+	public ApplierInVacancy () {
+		
+	}
+	
+	public ApplierInVacancy (Vacancy vacancy, Person person) {
+		this.vacancy = vacancy;
+		this.person = person;
+		this.status = "postulado";
+	}
 
 	public long getId() {
 		return id;

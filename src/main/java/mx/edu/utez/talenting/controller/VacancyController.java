@@ -88,16 +88,26 @@ public class VacancyController {
 	@GetMapping("/vacanciesAccordingToFilter")
 	public List<VacancyDTO> listAccordingToFilter(@RequestParam("userId") long id, @RequestParam("state") String state){
 		
+		List<Vacancy> vacancies = new ArrayList<>();
 		
+		if(state.equals("all")) {
+			vacancies = vacancySer.getOnlyTheActiveOnes();
+			
+			for(Vacancy vacancy : vacancies) {
+				System.out.println(vacancy.getId());
+			}
+			
+		}else {
+			vacancies = vacancySer.getAccordingToFilter(state);			
+		}
 		
-		List<Vacancy> vacancies = vacancySer.getAccordingToFilter(state);
 		 
 		List<VacancyDTO> vacanciesDTO = new ArrayList<>();
 		
 		for(Vacancy vacancy: vacancies){
 			
 			VacancyDTO vacancyDTOTemp = new VacancyDTO();
-			List<Benefit> benefits = benefitSer.getByVacancy(new Vacancy(vacancy.getId()));
+			List<Benefit> benefits = benefitSer.getByVacancy(vacancy);
 			vacancyDTOTemp.setVacancy(vacancy);
 			vacancyDTOTemp.setRetrievedBenefits(benefits);
 			vacanciesDTO.add(vacancyDTOTemp);
