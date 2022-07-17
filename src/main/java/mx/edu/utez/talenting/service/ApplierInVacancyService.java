@@ -35,4 +35,12 @@ public class ApplierInVacancyService {
 		applierInVacancyRepository.deleteById(id);
 	}
 	
+	public List <ApplierInVacancy> getAppliersByVacancy(long vacancyId){
+		return applierInVacancyRepository.getAppliersByVacancy(vacancyId);
+	}
+	
+	public int changeStatus (String status, long id) {
+		return applierInVacancyRepository.changeStatus(status, id);
+	}
+	
 }

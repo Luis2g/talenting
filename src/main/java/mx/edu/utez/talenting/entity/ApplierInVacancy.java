@@ -26,6 +26,9 @@ public class ApplierInVacancy implements Serializable {
 	@Column(nullable = false)
 	private String status;
 	
+	@Column(nullable = true)
+	private String interviewDate;
+	
 	//Foreign key for vacancies
 	@ManyToOne
 	@JoinColumn(name = "vacancy", nullable = false)
@@ -77,6 +80,16 @@ public class ApplierInVacancy implements Serializable {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
+
+	public String getInterviewDate() {
+		return interviewDate;
+	}
+
+	public void setInterviewDate(String interviewDate) {
+		this.interviewDate = interviewDate;
+	}
+	
+	
 		
 	
 }
