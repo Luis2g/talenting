@@ -49,6 +49,16 @@ public class ApplierInVacancyController {
 	public void delete(@RequestParam("vacancyId") long vacancyId) {
 		applierInVacancySer.remove(vacancyId);
 	}
+	
+	@GetMapping("/appliersList")
+	public List <ApplierInVacancy> listAppliers(@RequestParam("vacancyId") long vacancyId){
+		return applierInVacancySer.getAppliersByVacancy(vacancyId);
+	}
+	
+	@PostMapping("/changeAppliersStatus")
+	public int changeAppliersStatus(@RequestParam("status") String status, @RequestParam("id") long id) {
+		return applierInVacancySer.changeStatus(status, id);
+	}
 
 	
 }
