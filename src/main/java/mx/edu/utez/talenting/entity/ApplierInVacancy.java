@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "appliers_in_vacancies")
 public class ApplierInVacancy implements Serializable {
@@ -24,6 +26,9 @@ public class ApplierInVacancy implements Serializable {
 	@Column(nullable = false)
 	private String status;
 	
+	@Column(nullable = true)
+	private String interviewDate;
+	
 	//Foreign key for vacancies
 	@ManyToOne
 	@JoinColumn(name = "vacancy", nullable = false)
@@ -33,5 +38,58 @@ public class ApplierInVacancy implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "person", nullable = false)
 	private Person person;
+	
+	public ApplierInVacancy () {
+		
+	}
+	
+	public ApplierInVacancy (Vacancy vacancy, Person person) {
+		this.vacancy = vacancy;
+		this.person = person;
+		this.status = "postulado";
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Vacancy getVacancy() {
+		return vacancy;
+	}
+
+	public void setVacancy(Vacancy vacancy) {
+		this.vacancy = vacancy;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public String getInterviewDate() {
+		return interviewDate;
+	}
+
+	public void setInterviewDate(String interviewDate) {
+		this.interviewDate = interviewDate;
+	}
+	
+	
+		
 	
 }

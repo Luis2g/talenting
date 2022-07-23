@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mx.edu.utez.talenting.entity.Person;
 import mx.edu.utez.talenting.entity.SharedVacancy;
 import mx.edu.utez.talenting.repository.SharedVacancyRepository;
 
@@ -16,6 +17,10 @@ public class SharedVacancyService {
 	
 	public List<SharedVacancy> getAll(){
 		return sharedVacancyRepo.findAll();
+	}
+	
+	public List<SharedVacancy> findByPerson(Person person){
+		return sharedVacancyRepo.findByPerson(person);
 	}
 	
 	public SharedVacancy getOne(long id) {

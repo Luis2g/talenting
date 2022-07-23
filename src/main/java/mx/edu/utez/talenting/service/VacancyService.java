@@ -14,6 +14,10 @@ public class VacancyService {
 
 	@Autowired
 	private VacancyRepository vacancyRepo;
+
+	public List<Vacancy> getAccordingToFilter(String state){
+		return vacancyRepo.findByStateInWhichIsAvailableAndStatus(state, true);
+	}
 	
 	public List<Vacancy> getByEmployeer(Employeer employeer){
 		return vacancyRepo.findByEmployeer(employeer);
@@ -29,6 +33,18 @@ public class VacancyService {
 	
 	public void remove(long id) {
 		vacancyRepo.deleteById(id);
+	}
+	
+	public List<Vacancy> getVacanciesByApplier(long id){
+		return vacancyRepo.getVacanciesByApplier(id);
+	}
+	
+	public List<Vacancy> getOnlyTheActiveOnes(){
+		return vacancyRepo.findByStatus(true);
+	}
+	
+	public List<Vacancy> getSharedVacancies(long id){
+		return vacancyRepo.getSharedVacancies(id);
 	}
 	
 }

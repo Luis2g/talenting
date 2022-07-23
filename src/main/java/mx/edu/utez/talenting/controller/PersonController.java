@@ -1,5 +1,6 @@
 package mx.edu.utez.talenting.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import mx.edu.utez.talenting.dto.FriendDTO;
 import mx.edu.utez.talenting.dto.UserDTO;
 import mx.edu.utez.talenting.entity.Employeer;
+import mx.edu.utez.talenting.entity.Friend;
 import mx.edu.utez.talenting.entity.Person;
 import mx.edu.utez.talenting.entity.User;
 import mx.edu.utez.talenting.helper.Encrypt;
 import mx.edu.utez.talenting.service.EmployeerService;
+import mx.edu.utez.talenting.service.FriendService;
 import mx.edu.utez.talenting.service.PersonService;
 import mx.edu.utez.talenting.service.UserService;
 
@@ -34,6 +38,8 @@ public class PersonController {
 	private EmployeerService employeerSer;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private FriendService friendSer;
 	
 	@GetMapping("/people")
 	public List<Person> list(){
@@ -74,6 +80,48 @@ public class PersonController {
 	public void delete(@RequestParam("id") long id) {
 		personSer.remove(id);
 	}
-
 	
+	@GetMapping("/getPeople")
+	public List<FriendDTO> getPeopleToAddAsFriends(@RequestParam("personId") long personId){
+				
+		List<Person> people = personSer.getPeopleToAddAsFriends(personId);
+		List<Friend> requesters = friendSer.findByFriend(personId);
+		List<Friend> requestedOnes = friendSer.findByPerson(personId);
+		
+		List<FriendDTO> friendsDTO = new ArrayList<>();
+		
+		if(!people.isEmpty()) {
+			
+			for(Person person: people) {
+				System.out.println(person);
+				friendsDTO.add(new FriendDTO(person));
+			}
+			
+			
+			if(!requesters.isEmpty()) {
+				for(Friend requester: requesters) {
+					for(FriendDTO friendDTO: friendsDTO) {
+						if( requester.getPerson().getId() == friendDTO.getPerson().getId() ) {
+							friendDTO.setWhoSentIt("them");
+							friendDTO.setId(requester.getId());
+						}
+					}									
+				}
+			}
+			if(!requestedOnes.isEmpty()) {
+				for(Friend requestedOne: requestedOnes) {
+					for(FriendDTO friendDTO: friendsDTO) {
+						if( requestedOne.getFriend().getId() == friendDTO.getPerson().getId() ) {
+							friendDTO.setWhoSentIt("me");
+							friendDTO.setId(requestedOne.getId());
+						}
+					}									
+				}
+			}
+			
+		}
+		
+		return friendsDTO;
+	}
+
 }

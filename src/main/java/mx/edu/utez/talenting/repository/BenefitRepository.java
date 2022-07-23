@@ -23,4 +23,5 @@ public interface BenefitRepository extends JpaRepository<Benefit, Long>{
 	@Query(value = "DELETE FROM benefits WHERE vacancy = :vacancyId", nativeQuery=true)
 	void removeBenefits(long vacancyId);
 	
+	
 }

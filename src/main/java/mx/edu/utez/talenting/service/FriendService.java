@@ -30,4 +30,19 @@ public class FriendService {
 		friendRepo.deleteById(id);
 	}
 	
+	public List<Friend> findByFriend(long id){
+		return friendRepo.findByFriendId(id);
+	}
+	
+	public List<Friend> findByPerson(long id){
+		return friendRepo.findByPersonId(id);
+	}
+	
+	public void confirmFriendshipRequest(long id) {
+		friendRepo.confirmFriendshipRequest(id);
+	}
+	public void rejectFriendshipRequest(long id) {
+		friendRepo.rejectFriendshipRequest(id);
+	}
+	
 }

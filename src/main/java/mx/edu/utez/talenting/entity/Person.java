@@ -25,7 +25,7 @@ public class Person implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	
 	@Column(nullable = false)
 	private String name;
@@ -38,10 +38,17 @@ public class Person implements Serializable{
 	@Column(nullable = false)
 	private String dateOfBirth;
 	
-	public int getId() {
+	public Person() {
+		
+	}
+	public Person(long id) {
+		this.id = id;
+	}
+	
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -122,8 +129,8 @@ public class Person implements Serializable{
 	public String toString() {
 		return "Person [id=" + id + ", name=" + name + ", surname=" + surname + ", secondSurname=" + secondSurname
 				+ ", dateOfBirth=" + dateOfBirth + ", contactInformation=" + contactInformation + ", employeer="
-				+ employeer + ", friends=" + friends + ", persons=" + persons + ", favoritesVacancies="
-				+ favoritesVacancies + ", resume=" + resume + ", sharedVacancies=" + sharedVacancies + "]";
+				+ employeer + ", friends=" +  ", persons=" + persons + ", favoritesVacancies="
+				+  ", resume=" + resume + ", sharedVacancies=" ;
 	}
 	
 	

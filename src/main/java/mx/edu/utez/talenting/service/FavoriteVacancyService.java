@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.edu.utez.talenting.entity.FavoriteVacancy;
+import mx.edu.utez.talenting.entity.Person;
 import mx.edu.utez.talenting.repository.FavoriteVacancyRepository;
 
 @Service
@@ -20,6 +21,10 @@ public class FavoriteVacancyService {
 	
 	public FavoriteVacancy getOne(long id) {
 		return favoriteVacancyRepo.findById(id).get();
+	}
+	
+	public List<FavoriteVacancy> findByPerson(Person person){
+		return favoriteVacancyRepo.findByPerson(person);
 	}
 	
 	public FavoriteVacancy saveOrUpdate(FavoriteVacancy cerficationOrCourse) {
