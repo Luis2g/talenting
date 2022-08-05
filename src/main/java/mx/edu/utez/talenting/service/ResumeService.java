@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.edu.utez.talenting.entity.Resume;
+import mx.edu.utez.talenting.entity.User;
 import mx.edu.utez.talenting.repository.ResumeRepository;
 
 @Service
@@ -24,6 +25,10 @@ public class ResumeService {
 	
 	public Resume saveOrUpdate(Resume cerficationOrCourse) {
 		return resumeRepo.save(cerficationOrCourse);
+	}
+	
+	public Resume save(Resume resume) {
+		return resumeRepo.save(resume);
 	}
 	
 	public void remove(long id) {

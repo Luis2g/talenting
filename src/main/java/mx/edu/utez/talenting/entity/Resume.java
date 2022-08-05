@@ -60,7 +60,85 @@ public class Resume implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "person")
 	private Person person;
-	
-	
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getProfessionalDescription() {
+		return professionalDescription;
+	}
+
+	public void setProfessionalDescription(String professionalDescription) {
+		this.professionalDescription = professionalDescription;
+	}
+
+	public boolean isHasExperience() {
+		return hasExperience;
+	}
+
+	public void setHasExperience(boolean hasExperience) {
+		this.hasExperience = hasExperience;
+	}
+
+	public String getExpertise() {
+		return expertise;
+	}
+
+	public void setExpertise(String expertise) {
+		this.expertise = expertise;
+	}
+
+	public String getSchool_preparation() {
+		return school_preparation;
+	}
+
+	public void setSchool_preparation(String school_preparation) {
+		this.school_preparation = school_preparation;
+	}
+
+	public List<CertificationOrCourse> getCertificationOrCourse() {
+		return certificationOrCourse;
+	}
+
+	public void setCertificationOrCourse(List<CertificationOrCourse> certificationOrCourse) {
+		this.certificationOrCourse = certificationOrCourse;
+	}
+
+	public List<Skill> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+
+	public List<Language> getLaguagues() {
+		return laguagues;
+	}
+
+	public void setLaguagues(List<Language> laguagues) {
+		this.laguagues = laguagues;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 	
 }

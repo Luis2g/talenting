@@ -28,6 +28,31 @@ public class Skill implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "resume", nullable = false)
 	private Resume resume;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Resume getResume() {
+		return resume;
+	}
+
+	public void setResume(Resume resume) {
+		this.resume = resume;
+	}
+	
 	
 	
 }
