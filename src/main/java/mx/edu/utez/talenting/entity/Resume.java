@@ -140,5 +140,16 @@ public class Resume implements Serializable {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
+
+	@Override
+	public String toString() {
+		return "Resume [id=" + id + ", title=" + title + ", professionalDescription=" + professionalDescription
+				+ ", hasExperience=" + hasExperience + ", expertise=" + expertise + ", school_preparation="
+				+ school_preparation + ", laguagues=" + laguagues + "]";
+	}
+
+	
+	
+	
 	
 }

@@ -54,27 +54,40 @@ public class ResumeController {
 	
 	@PostMapping("/resumes")
 	public Resume save(@RequestBody ResumeDTO resumeDTO) {
+		System.out.println("Resume: "+ resumeDTO);
 		
-		
-		Resume resume = resumeDTO.getResume();
-		resume.setPerson(resumeDTO.getPerson());
-		resumeSer.save(resume);
-		
-		if(resumeDTO.getCertificationOrCourse() != null) {
-			
-			CertificationOrCourse certificationOrCourse = resumeDTO.getCertificationOrCourse();
-			
-			certificationOrCourse.setResume(resume);
-			certificationOrCourseSer.saveOrUpdate(certificationOrCourse);
+		Resume resume = resumeSer.save(resumeDTO.getResume());
+		for (Skill x : resumeDTO.getSkill()) {
+			x.setResume(resume);
+			System.out.println(x);
+			skillSer.saveOrUpdate(x);
 		}
-		
-		Skill skill = resumeDTO.getSkill();
-		skill.setResume(resume);
-		skillSer.saveOrUpdate(skill);
-		
-		Language language = resumeDTO.getLanguage();
-		language.setResume(resume);
-		languageSer.saveOrUpdate(language);
+		for (CertificationOrCourse x : resumeDTO.getCertificationOrCourse()) {
+			x.setResume(resume);
+			System.out.println(x);
+			certificationOrCourseSer.saveOrUpdate(x);
+		}
+		for (Language x : resumeDTO.getLanguage()) {
+			x.setResume(resume);
+			System.out.println(x);
+			languageSer.saveOrUpdate(x);
+		}
+//		
+//		if(resumeDTO.getCertificationOrCourse() != null) {
+//			
+//			CertificationOrCourse certificationOrCourse = resumeDTO.getCertificationOrCourse();
+//			
+//			certificationOrCourse.setResume(resume);
+//			certificationOrCourseSer.saveOrUpdate(certificationOrCourse);
+//		}
+//		
+//		Skill skill = resumeDTO.getSkill();
+//		skill.setResume(resume);
+//		skillSer.saveOrUpdate(skill);
+//		
+//		Language language = resumeDTO.getLanguage();
+//		language.setResume(resume);
+//		languageSer.saveOrUpdate(language);
 		
 		return resume;
 		
