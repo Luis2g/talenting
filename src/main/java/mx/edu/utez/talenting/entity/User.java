@@ -1,6 +1,8 @@
 package mx.edu.utez.talenting.entity;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,9 +15,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table
-public class User implements Serializable{
+public class User implements UserDetails  {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +37,9 @@ public class User implements Serializable{
 	
 	@Column(nullable = false)
 	private String role;
-	
+
+	private String token;
+
 	//Foreign key for person
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "person", unique = true, nullable = false)
@@ -45,9 +53,6 @@ public class User implements Serializable{
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
-	}
 
 	public void setUsername(String username) {
 		this.username = username;
@@ -77,4 +82,46 @@ public class User implements Serializable{
 		this.role = role;
 	}
 	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	@Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        
+        authorities.add(new SimpleGrantedAuthority(this.role));
+        
+        return authorities;
+    }
+
+	@Override
+	public String getUsername() {
+		return this.username;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
 }

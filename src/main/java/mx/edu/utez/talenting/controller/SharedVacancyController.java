@@ -3,6 +3,8 @@ package mx.edu.utez.talenting.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,6 +49,7 @@ public class SharedVacancyController {
 	@Autowired
 	private VacancyService vacancySer;
 	
+	@RolesAllowed({"employeer", "employee"})
 	@GetMapping("/socialMedia")
 	public List<VacancyDTO> list(@RequestParam("personId") long id){
 		
@@ -120,21 +123,25 @@ public class SharedVacancyController {
 		return vacanciesDTO;
 	}
 	
+	@RolesAllowed({"employeer", "employee"})
 	@GetMapping("/sharedVacancies/{id}")
 	public SharedVacancy edit(@PathVariable("id") long id) {
 		return sharedVacancySer.getOne(id);
 	}
 	
+	@RolesAllowed({"employeer", "employee"})
 	@PutMapping("/sharedVacancies")
 	public SharedVacancy update(@RequestBody SharedVacancy sharedVacancy) {
 		return sharedVacancySer.saveOrUpdate(sharedVacancy);
 	}
 	
+	@RolesAllowed({"employeer", "employee"})
 	@PostMapping("/sharedVacancies")
 	public SharedVacancy save(@RequestBody SharedVacancy sharedVacancy) {
 		return sharedVacancySer.saveOrUpdate(sharedVacancy);
 	}
 	
+	@RolesAllowed({"employeer", "employee"})
 	@DeleteMapping("/sharedVacancies")
 	public void delete(@RequestParam("vacancyId") long id) {
 		sharedVacancySer.remove(id);

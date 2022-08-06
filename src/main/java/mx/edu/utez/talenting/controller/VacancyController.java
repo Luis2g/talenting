@@ -3,6 +3,8 @@ package mx.edu.utez.talenting.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,7 +66,7 @@ public class VacancyController {
 		
 		return vacanciesDTO;
 	}
-	
+	@RolesAllowed("employeer")
 	@GetMapping("/vacanciesByApplier")
 	public List<VacancyDTO> getVacanciesByApplier(@RequestParam("applierId") long id){
 		
@@ -159,7 +161,7 @@ public class VacancyController {
 	}
 	
 	
-	
+	@RolesAllowed("employeer")
 	@GetMapping("/vacancies/{id}")
 	public Vacancy edit(@PathVariable("id") long id) {
 		return vacancySer.getOne(id);
@@ -182,11 +184,13 @@ public class VacancyController {
 		return vacancySer.saveOrUpdate(vacancyDTO.getVacancy());
 	}
 	
+	@RolesAllowed("employeer")
 	@PutMapping("/vacancies/changeStatus")
 	public Vacancy changeStatus(@RequestBody Vacancy vacancy) {
 		return vacancySer.saveOrUpdate(vacancy);
 	}
 	
+	@RolesAllowed("employeer")
 	@PostMapping("/vacancies")
 	public Vacancy save(@RequestBody VacancyDTO vacancyDTO) {
 		System.out.println("This is the vacancy " + vacancyDTO);
@@ -205,6 +209,7 @@ public class VacancyController {
 		return savedVacancy;
 	}
 	
+	@RolesAllowed("employeer")
 	@DeleteMapping("/vacancies")
 	public void delete(@RequestParam("id") long id) {
 		vacancySer.remove(id);
