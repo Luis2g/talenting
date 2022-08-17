@@ -41,6 +41,12 @@ public class Resume implements Serializable {
 	@Column(name = "school_preparation", nullable = false)
 	private String school_preparation;
 	
+	@Column(name = "profile_image", nullable = true)
+	private String profileImage;
+	
+	@Column(name = "pdf_resume", nullable = true)
+	private String PDFResume;
+	
 	//Configuration for cetifications or courses
 	@OneToMany(mappedBy = "resume")
 	@JsonIgnore
@@ -107,6 +113,22 @@ public class Resume implements Serializable {
 
 	public void setSchool_preparation(String school_preparation) {
 		this.school_preparation = school_preparation;
+	}
+	
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	public String getPDFResume() {
+		return PDFResume;
+	}
+
+	public void setPDFResume(String pDFResume) {
+		PDFResume = pDFResume;
 	}
 
 	public List<CertificationOrCourse> getCertificationOrCourse() {
