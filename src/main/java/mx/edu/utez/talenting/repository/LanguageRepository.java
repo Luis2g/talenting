@@ -15,7 +15,7 @@ public interface LanguageRepository extends JpaRepository<Language, Long>{
 	public List<Language> findByResumeId(long id);
 	
 	@Modifying
-	@Query("DELETE FROM Language l WHERE l.resume = :resume")
-	void deleteByResume(long resume);
+	@Query(value= "DELETE FROM languagues WHERE resume = :id", nativeQuery = true)
+	void deleteByResume(long id);
 
 }

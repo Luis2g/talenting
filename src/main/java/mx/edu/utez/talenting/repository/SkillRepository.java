@@ -18,6 +18,6 @@ public interface SkillRepository extends JpaRepository<Skill, Long>{
 	public List<Skill> findByResumeId(long id);
 	
 	@Modifying
-	@Query("DELETE FROM Skill s WHERE s.resume = :resume")
-	void deleteByResume(long resume);
+	@Query(value= "DELETE FROM skills WHERE resume = :id", nativeQuery = true)
+	void deleteByResume(long id);
 }

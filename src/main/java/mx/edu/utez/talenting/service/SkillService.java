@@ -2,6 +2,8 @@ package mx.edu.utez.talenting.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,10 +42,12 @@ public class SkillService {
 		skillRepo.deleteById(id);
 	}
 	
-	public void deleteByResume(long resume) {
-		skillRepo.deleteByResume(resume);
+	public void deleteByResume(long id) {
+		System.out.println("Id del resume: "+id);
+		skillRepo.deleteByResume(id);
 	}
 	
+	@Transactional
 	public List<Skill> findAllByResumeId(long id) {
 		return skillRepo.findByResumeId(id);
 	}

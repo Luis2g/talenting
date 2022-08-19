@@ -75,7 +75,7 @@ public class ResumeController {
 	
 	@PostMapping("/resumes")
 	public Resume save(@RequestBody ResumeDTO resumeDTO) {
-		System.out.println("Resume: "+ resumeDTO);
+		System.out.println("Resume: "+ resumeDTO.getResume().getId());
 		
 		if(profileImageName != null) {
 			resumeDTO.getResume().setProfileImage(profileImageName);
@@ -90,17 +90,22 @@ public class ResumeController {
 		
 		List <Skill>existSkill = new ArrayList<>();
 		existSkill = skillSer.getAll();
+		System.out.println(existSkill.size());
 		if(existSkill.size() == 0) {
-			for (Skill x : resumeDTO.getSkill()) {
+			System.out.println("Registro normal de skills");
+			for (Skill x : existSkill) {
+				System.out.println("Registrando skill...");
 				x.setResume(resume);
 				System.out.println(x);
 				skillSer.save(x);
 			}
 		}else {
+			System.out.println("Actualización de skills");
+			System.out.println("Eliminando skill...");
+			System.out.println("Id del resume: "+resumeDTO.getResume().getId());
+			skillSer.deleteByResume(resumeDTO.getResume().getId());
 			for (Skill x : resumeDTO.getSkill()) {
-				skillSer.deleteByResume(resumeDTO.getResume().getId());
-			}
-			for (Skill x : resumeDTO.getSkill()) {
+				System.out.println("Actualizando skills...");
 				x.setResume(resume);
 				System.out.println(x);
 				skillSer.save(x);
@@ -111,15 +116,14 @@ public class ResumeController {
 		List <CertificationOrCourse> existCertificationOrCouse = new ArrayList<>();
 		existCertificationOrCouse = certificationOrCourseSer.getAll();
 		if(existCertificationOrCouse.size() == 0) {
+			System.out.println("Registro normal de skills");
 			for (CertificationOrCourse x : resumeDTO.getCertificationOrCourse()) {
 				x.setResume(resume);
 				System.out.println(x);
 				certificationOrCourseSer.save(x);
 			}
 		}else {
-			for (CertificationOrCourse x : resumeDTO.getCertificationOrCourse()) {
-				certificationOrCourseSer.deleteByResume(resumeDTO.getResume().getId());
-			}
+			certificationOrCourseSer.deleteByResume(resumeDTO.getResume().getId());
 			for (CertificationOrCourse x : resumeDTO.getCertificationOrCourse()) {
 				x.setResume(resume);
 				System.out.println(x);
@@ -137,9 +141,7 @@ public class ResumeController {
 				languageSer.save(x);
 			}
 		}else{
-			for(Language x : resumeDTO.getLanguage()) {
-				languageSer.deleteByResume(resumeDTO.getResume().getId());
-			}
+			languageSer.deleteByResume(resumeDTO.getResume().getId());
 			for (Language x : resumeDTO.getLanguage()) {
 				x.setResume(resume);
 				System.out.println(x);

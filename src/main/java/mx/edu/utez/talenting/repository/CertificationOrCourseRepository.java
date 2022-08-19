@@ -15,7 +15,7 @@ public interface CertificationOrCourseRepository extends JpaRepository<Certifica
 	public List<CertificationOrCourse> findByResumeId(long id);
 
 	@Modifying
-	@Query("DELETE FROM CertificationOrCourse c WHERE c.resume = :resume")
-	void deleteByResume(long resume);
+	@Query(value= "DELETE FROM certifications_or_courses WHERE resume = :id", nativeQuery = true)
+	void deleteByResume(long id);
 	
 }

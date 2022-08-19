@@ -2,6 +2,8 @@ package mx.edu.utez.talenting.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +42,7 @@ public class LanguageService {
 		languageRepo.deleteById(id);
 	}
 	
+	@Transactional
 	public void deleteByResume(long id) {
 		languageRepo.deleteByResume(id);
 	}
