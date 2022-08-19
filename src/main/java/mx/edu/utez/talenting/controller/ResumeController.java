@@ -3,6 +3,7 @@ package mx.edu.utez.talenting.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,8 +65,12 @@ public class ResumeController {
 	
 	@GetMapping("/resumes/{id}")
 	public ResumeDTO listResumeByPerson(@PathVariable("id") long id) {
-		System.out.println("Si lo hace :D");
-		return resumeSer.findByPersonId(id);
+		try {
+			return resumeSer.findByPersonId(id);
+		}catch (Exception e) {
+			System.out.print(e);
+		}
+		return new ResumeDTO();
 	}
 	
 	@PostMapping("/resumes")
@@ -80,21 +85,66 @@ public class ResumeController {
 			resumeDTO.getResume().setPDFResume(PDFResumeName);
 		}
 		
-		Resume resume = resumeSer.save(resumeDTO.getResume());
-		for (Skill x : resumeDTO.getSkill()) {
-			x.setResume(resume);
-			System.out.println(x);
-			skillSer.saveOrUpdate(x);
+		Resume resume = resumeSer.saveOrUpdate(resumeDTO.getResume());
+		
+		
+		List <Skill>existSkill = new ArrayList<>();
+		existSkill = skillSer.getAll();
+		if(existSkill.size() == 0) {
+			for (Skill x : resumeDTO.getSkill()) {
+				x.setResume(resume);
+				System.out.println(x);
+				skillSer.save(x);
+			}
+		}else {
+			for (Skill x : resumeDTO.getSkill()) {
+				skillSer.deleteByResume(resumeDTO.getResume().getId());
+			}
+			for (Skill x : resumeDTO.getSkill()) {
+				x.setResume(resume);
+				System.out.println(x);
+				skillSer.save(x);
+			}
 		}
-		for (CertificationOrCourse x : resumeDTO.getCertificationOrCourse()) {
-			x.setResume(resume);
-			System.out.println(x);
-			certificationOrCourseSer.saveOrUpdate(x);
+		
+		
+		List <CertificationOrCourse> existCertificationOrCouse = new ArrayList<>();
+		existCertificationOrCouse = certificationOrCourseSer.getAll();
+		if(existCertificationOrCouse.size() == 0) {
+			for (CertificationOrCourse x : resumeDTO.getCertificationOrCourse()) {
+				x.setResume(resume);
+				System.out.println(x);
+				certificationOrCourseSer.save(x);
+			}
+		}else {
+			for (CertificationOrCourse x : resumeDTO.getCertificationOrCourse()) {
+				certificationOrCourseSer.deleteByResume(resumeDTO.getResume().getId());
+			}
+			for (CertificationOrCourse x : resumeDTO.getCertificationOrCourse()) {
+				x.setResume(resume);
+				System.out.println(x);
+				certificationOrCourseSer.save(x);
+			}
 		}
-		for (Language x : resumeDTO.getLanguage()) {
-			x.setResume(resume);
-			System.out.println(x);
-			languageSer.saveOrUpdate(x);
+		
+		
+		List <Language> existLanguage = new ArrayList<>();
+		existLanguage = languageSer.getAll();
+		if(existLanguage.size() == 0) {
+			for (Language x : resumeDTO.getLanguage()) {
+				x.setResume(resume);
+				System.out.println(x);
+				languageSer.save(x);
+			}
+		}else{
+			for(Language x : resumeDTO.getLanguage()) {
+				languageSer.deleteByResume(resumeDTO.getResume().getId());
+			}
+			for (Language x : resumeDTO.getLanguage()) {
+				x.setResume(resume);
+				System.out.println(x);
+				languageSer.save(x);
+			}
 		}
 		
 		return resume;

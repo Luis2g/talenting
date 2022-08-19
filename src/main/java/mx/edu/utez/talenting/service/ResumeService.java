@@ -49,7 +49,8 @@ public class ResumeService {
 	}
 	
 	public ResumeDTO findByPersonId(long id) {
-		ResumeDTO resumeDTO = resumeRepo.findByPersonId(id);
+		ResumeDTO resumeDTO = new ResumeDTO();
+		resumeDTO.setResume(resumeRepo.findByPersonId(id));
 		resumeDTO.setLanguage(languageRepo.findByResumeId(resumeDTO.getResume().getId()));
 		resumeDTO.setSkill(skillRepo.findByResumeId(resumeDTO.getResume().getId()));
 		resumeDTO.setCertificationOrCourse(certificationOrCourseRepo.findByResumeId(resumeDTO.getResume().getId()));
