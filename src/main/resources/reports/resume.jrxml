@@ -6,8 +6,8 @@
 	<parameter name="idResume" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\Repositorios\\Talenting\\talenting\\src\\main\\resources\\reports\\"]]></defaultValueExpression>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT r.*, CONCAT(p.name, ' ',p.surname, ' ', p.second_surname) as completeName, p.date_of_birth,ci.* FROM resumes r
@@ -203,7 +203,7 @@
 	<detail>
 		<band height="111" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="11" width="300" height="100" uuid="20e5b4d2-92e9-4f6b-bf78-2dfc0ca8cea8"/>
+				<reportElement x="0" y="11" width="300" height="100" uuid="8e957869-7efe-4411-be42-5a3dc0387d28"/>
 				<subreportParameter name="idResume">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -211,7 +211,7 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "languages.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="300" y="11" width="255" height="100" uuid="182095c2-fce4-46c1-91d2-4f58daa24a07"/>
+				<reportElement x="300" y="11" width="255" height="100" uuid="a134a55f-5457-4b7d-9c96-5e8454a8f0fd"/>
 				<subreportParameter name="idResume">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -219,9 +219,9 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "skills.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="116">
+		<band height="112">
 			<subreport>
-				<reportElement x="0" y="16" width="555" height="100" uuid="ef97196a-d017-408a-8818-4cd2ade40702"/>
+				<reportElement x="0" y="12" width="555" height="100" uuid="86e49f41-236c-4788-81c3-ec4808eac90a"/>
 				<subreportParameter name="idResume">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
