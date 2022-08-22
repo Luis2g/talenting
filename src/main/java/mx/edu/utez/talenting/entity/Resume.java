@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -41,11 +42,13 @@ public class Resume implements Serializable {
 	@Column(name = "school_preparation", nullable = false)
 	private String school_preparation;
 	
+	@Lob
 	@Column(name = "profile_image", nullable = true)
-	private String profileImage;
+	private byte[] profileImage;
 	
+	@Lob
 	@Column(name = "pdf_resume", nullable = true)
-	private String PDFResume;
+	private byte[] PDFResume;
 	
 	//Configuration for cetifications or courses
 	@OneToMany(mappedBy = "resume")
@@ -114,20 +117,20 @@ public class Resume implements Serializable {
 	public void setSchool_preparation(String school_preparation) {
 		this.school_preparation = school_preparation;
 	}
-	
-	public String getProfileImage() {
+
+	public byte[] getProfileImage() {
 		return profileImage;
 	}
 
-	public void setProfileImage(String profileImage) {
+	public void setProfileImage(byte[] profileImage) {
 		this.profileImage = profileImage;
 	}
 
-	public String getPDFResume() {
+	public byte[] getPDFResume() {
 		return PDFResume;
 	}
 
-	public void setPDFResume(String pDFResume) {
+	public void setPDFResume(byte[] pDFResume) {
 		PDFResume = pDFResume;
 	}
 

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="skills" pageWidth="255" pageHeight="842" columnWidth="255" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7c2022e9-bda2-433f-bfa0-de2d3c42f295">
+	<property name="ireport.zoom" value="3.797498335832427"/>
+	<property name="ireport.x" value="69"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idResume" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from skills WHERE resume = $P{idResume};]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="resume" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="31" width="40" height="15" forecolor="#006699" backcolor="#FFFFFF" uuid="e7f664e7-6dd5-439c-ad68-483c90c71c1f"/>
+				<box>
+					<pen lineColor="#996600"/>
+					<topPen lineColor="#996600"/>
+					<leftPen lineColor="#996600"/>
+					<bottomPen lineColor="#996600"/>
+					<rightPen lineColor="#996600"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="30" width="255" height="1" forecolor="#006699" uuid="75213e2f-dcc3-47c1-9291-8455c3204bf9"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="40" y="31" width="215" height="15" forecolor="#006699" backcolor="#FFFFFF" uuid="02141ef4-f16e-4cbd-adc2-29e37e4fa88d"/>
+				<box>
+					<pen lineColor="#996600"/>
+					<topPen lineColor="#996600"/>
+					<leftPen lineColor="#996600"/>
+					<bottomPen lineColor="#996600"/>
+					<rightPen lineColor="#996600"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Habilidad]]></text>
+			</staticText>
+			<rectangle radius="2">
+				<reportElement x="0" y="0" width="255" height="20" backcolor="#006699" uuid="e3d61cfd-36e7-4498-8f33-ba95cc3539f8"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="255" height="20" forecolor="#FFFFFF" uuid="0efe3586-7959-4f43-9d12-96f3401f5181"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Habilidades]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="47" width="255" height="1" forecolor="#006699" uuid="3935c552-d504-4409-bca7-88c66b00cce6"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="40" y="0" width="215" height="20" uuid="99fb8b8a-82a7-4b4a-967a-7902fe16d454"/>
+				<box>
+					<pen lineColor="#996600"/>
+					<topPen lineColor="#996600"/>
+					<leftPen lineColor="#996600"/>
+					<bottomPen lineColor="#996600"/>
+					<rightPen lineColor="#996600"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="40" height="20" forecolor="#006699" uuid="7e6b7ef7-b0ca-487b-a6c5-f5d2e0af0b7d"/>
+				<box>
+					<pen lineColor="#996600"/>
+					<topPen lineColor="#996600"/>
+					<leftPen lineColor="#996600"/>
+					<bottomPen lineColor="#996600"/>
+					<rightPen lineColor="#996600"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="255" height="1" forecolor="#006699" uuid="09b529d1-7024-4858-9ef5-6fa53ad026ba"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,14 +1,17 @@
 package mx.edu.utez.talenting.controller;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.FileSystems;
+import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import org.apache.commons.io.FilenameUtils;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import mx.edu.utez.talenting.dto.ResumeDTO;
 import mx.edu.utez.talenting.entity.CertificationOrCourse;
@@ -31,6 +36,9 @@ import mx.edu.utez.talenting.service.CertificationOrCourseService;
 import mx.edu.utez.talenting.service.LanguageService;
 import mx.edu.utez.talenting.service.ResumeService;
 import mx.edu.utez.talenting.service.SkillService;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 @RestController
 @RequestMapping("/talenting")
@@ -49,9 +57,8 @@ public class ResumeController {
 	@Autowired
 	private LanguageService languageSer;
 	
-	private String profileImageName;
-	
-	private String PDFResumeName;
+	private static final String typeApp = "application/x-pdf";
+    private static final String attachment = "attachment; filename=cv.pdf";
 	
 	@GetMapping("/resumes")
 	public List<Resume> list(){
@@ -74,40 +81,28 @@ public class ResumeController {
 	}
 	
 	@PostMapping("/resumes")
-	public Resume save(@RequestBody ResumeDTO resumeDTO) {
-		System.out.println("Resume: "+ resumeDTO.getResume().getId());
-		
-		if(profileImageName != null) {
-			resumeDTO.getResume().setProfileImage(profileImageName);
-		}
-		
-		if(PDFResumeName != null) {
-			resumeDTO.getResume().setPDFResume(PDFResumeName);
-		}
-		
+	public Resume save(@RequestBody ResumeDTO resumeDTO) throws IOException {
 		Resume resume = resumeSer.saveOrUpdate(resumeDTO.getResume());
 		
+		if(resumeDTO.getResume().getProfileImage() != null) {
+			resume.setProfileImage(resumeDTO.getResume().getProfileImage());
+		}
+		
+		if(resumeDTO.getResume().getPDFResume() != null) {
+			resume.setPDFResume(resumeDTO.getResume().getPDFResume());
+		}
 		
 		List <Skill>existSkill = new ArrayList<>();
 		existSkill = skillSer.getAll();
-		System.out.println(existSkill.size());
 		if(existSkill.size() == 0) {
-			System.out.println("Registro normal de skills");
-			for (Skill x : existSkill) {
-				System.out.println("Registrando skill...");
+			for (Skill x : resumeDTO.getSkill()) {
 				x.setResume(resume);
-				System.out.println(x);
 				skillSer.save(x);
 			}
 		}else {
-			System.out.println("Actualización de skills");
-			System.out.println("Eliminando skill...");
-			System.out.println("Id del resume: "+resumeDTO.getResume().getId());
 			skillSer.deleteByResume(resumeDTO.getResume().getId());
 			for (Skill x : resumeDTO.getSkill()) {
-				System.out.println("Actualizando skills...");
 				x.setResume(resume);
-				System.out.println(x);
 				skillSer.save(x);
 			}
 		}
@@ -116,17 +111,14 @@ public class ResumeController {
 		List <CertificationOrCourse> existCertificationOrCouse = new ArrayList<>();
 		existCertificationOrCouse = certificationOrCourseSer.getAll();
 		if(existCertificationOrCouse.size() == 0) {
-			System.out.println("Registro normal de skills");
 			for (CertificationOrCourse x : resumeDTO.getCertificationOrCourse()) {
 				x.setResume(resume);
-				System.out.println(x);
 				certificationOrCourseSer.save(x);
 			}
 		}else {
 			certificationOrCourseSer.deleteByResume(resumeDTO.getResume().getId());
 			for (CertificationOrCourse x : resumeDTO.getCertificationOrCourse()) {
 				x.setResume(resume);
-				System.out.println(x);
 				certificationOrCourseSer.save(x);
 			}
 		}
@@ -137,14 +129,12 @@ public class ResumeController {
 		if(existLanguage.size() == 0) {
 			for (Language x : resumeDTO.getLanguage()) {
 				x.setResume(resume);
-				System.out.println(x);
 				languageSer.save(x);
 			}
 		}else{
 			languageSer.deleteByResume(resumeDTO.getResume().getId());
 			for (Language x : resumeDTO.getLanguage()) {
 				x.setResume(resume);
-				System.out.println(x);
 				languageSer.save(x);
 			}
 		}
@@ -163,34 +153,16 @@ public class ResumeController {
 		resumeSer.remove(id);
 	}
 	
-	
-	@PostMapping("/upload/profileImage")
-    public void uploadProfileImage(@RequestParam("file") MultipartFile file) {
-        String separator = FileSystems.getDefault().getSeparator();
-        String fileName = UUID.randomUUID().toString();
-        String ext = FilenameUtils.getExtension(file.getOriginalFilename());
-        try {
-            String userDirectory = FileSystems.getDefault().getPath("").toAbsolutePath().toString();
-            file.transferTo(new File(userDirectory + "\\src\\main\\resources\\static\\uploads\\" + separator + "profileImages" + separator + fileName + "." + ext));
-            this.profileImageName = fileName + "." + ext;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	@PostMapping("/upload/PDFResume")
-    public void uploadPDFResume(@RequestParam("file") MultipartFile file) {
-        String separator = FileSystems.getDefault().getSeparator();
-        String fileName = UUID.randomUUID().toString();
-        String ext = FilenameUtils.getExtension(file.getOriginalFilename());
-        try {
-            String userDirectory = FileSystems.getDefault().getPath("").toAbsolutePath().toString();
-            file.transferTo(new File(userDirectory + "\\src\\main\\resources\\static\\uploads\\" + separator + "PDFResume" + separator + fileName + "." + ext));
-            this.PDFResumeName = fileName + "." + ext;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	@RequestMapping(value = "/resumes/CV/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public void test(HttpServletResponse response, @PathVariable("id") int idResume)
+            throws JRException, IOException, SQLException {
+            JasperPrint jasperPrint = resumeSer.resumePDF(idResume);
+            response.setContentType(typeApp);
+            response.setHeader("Content-disposition", attachment);
+            OutputStream outputStream = response.getOutputStream();
+            JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
 
+    }
 	
 }
