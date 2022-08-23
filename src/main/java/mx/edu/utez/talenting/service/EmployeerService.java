@@ -22,6 +22,10 @@ public class EmployeerService {
 		return employeerRepo.findById(id).get();
 	}
 	
+	public Employeer findByPerson(long id) {
+		return employeerRepo.findByPerson_id(id);
+	}
+	
 	public Employeer saveOrUpdate(Employeer cerficationOrCourse) {
 		return employeerRepo.save(cerficationOrCourse);
 	}
