@@ -2,8 +2,6 @@ package mx.edu.utez.talenting.controller;
 
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,25 +22,21 @@ public class ResumeController {
 	@Autowired
 	private ResumeService resumeSer;
 	
-	@RolesAllowed({"employeer", "employee"})
 	@GetMapping("/resumes")
 	public List<Resume> list(){
 		return resumeSer.getAll();
 	}
 	
-	@RolesAllowed({"employeer", "employee"})
 	@GetMapping("/resumes/{id}")
 	public Resume edit(@PathVariable("id") long id) {
 		return resumeSer.getOne(id);
 	}
 	
-	@RolesAllowed({"employeer", "employee"})
 	@PutMapping("/resumes")
 	public Resume update(@RequestBody Resume resume) {
 		return resumeSer.saveOrUpdate(resume);
 	}
 	
-	@RolesAllowed({"employeer", "employee"})
 	@DeleteMapping("/resumes")
 	public void delete(@RequestParam("id") long id) {
 		resumeSer.remove(id);
