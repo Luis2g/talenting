@@ -19,8 +19,28 @@ public class VacancyService {
 		return vacancyRepo.findByStateInWhichIsAvailableAndStatus(state, true);
 	}
 	
+	public List<Vacancy> getAccordingToTitle(String title){
+		return vacancyRepo.getFilterVacancies(title, true);
+	}
+	
+	public List<Vacancy> getAccordingToTitleAndState(String title, String state){
+		return vacancyRepo.getFilterVacancies(title, state , true);
+	}
+	
 	public List<Vacancy> getByEmployeer(Employeer employeer){
 		return vacancyRepo.findByEmployeer(employeer);
+	}
+	
+	public List<Vacancy> getByEmployeerAndState(Employeer employeer, String state){
+		return vacancyRepo.findByEmployeerAndStateInWhichIsAvailable(employeer,state);
+	}
+	
+	public List<Vacancy> getByEmployeerAndTitle(Employeer employeer, String title){
+		return vacancyRepo.findByEmployeerAndTitleContaining(employeer,title);
+	}
+	
+	public List<Vacancy> getByEmployeerAndStateAndTitle(Employeer employeer,String state, String title){
+		return vacancyRepo.findByEmployeerAndStateInWhichIsAvailableAndTitleContaining(employeer, state, title);
 	}
 	
 	public Vacancy getOne(long id) {

@@ -3,8 +3,10 @@ package mx.edu.utez.talenting.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +44,7 @@ public class CertificationOrCourse implements Serializable {
 	private Date expeditionDate;
 	
 	//Foreign key for resume
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "resume", nullable = false)
 	private Resume resume;
 
@@ -112,6 +114,13 @@ public class CertificationOrCourse implements Serializable {
 
 	public void setExpeditionDate(Date expeditionDate) {
 		this.expeditionDate = expeditionDate;
+	}
+
+	@Override
+	public String toString() {
+		return "CertificationOrCourse [id=" + id + ", type=" + type + ", name=" + name + ", hours=" + hours
+				+ ", nameOfTheInstitudeThatIssuesIt=" + nameOfTheInstitudeThatIssuesIt + ", expirationDate="
+				+ expirationDate + ", expeditionDate=" + expeditionDate + "]";
 	}
 
 	
