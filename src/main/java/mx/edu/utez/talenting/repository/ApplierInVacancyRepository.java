@@ -20,7 +20,7 @@ public interface ApplierInVacancyRepository extends JpaRepository<ApplierInVacan
 	@Modifying
 	@Transactional
 	@Query(value="SELECT * FROM appliers_in_vacancies av JOIN vacancies v on av.vacancy = v.id"
-			+ " WHERE v.id = :vacancyId ORDER BY status ASC", nativeQuery=true)
+			+ " WHERE v.id = :vacancyId ORDER BY av.status ASC", nativeQuery=true)
 	List<ApplierInVacancy> getAppliersByVacancy(long vacancyId);
 
 	@Modifying
