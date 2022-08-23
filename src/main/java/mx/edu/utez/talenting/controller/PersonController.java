@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import mx.edu.utez.talenting.dto.FriendDTO;
+import mx.edu.utez.talenting.dto.UserChangePasswordDTO;
+
 import mx.edu.utez.talenting.dto.UserDTO;
 import mx.edu.utez.talenting.entity.Employeer;
 import mx.edu.utez.talenting.entity.Friend;
@@ -63,8 +65,13 @@ public class PersonController {
 	@PostMapping("/people")
 	public Person save(@RequestBody UserDTO userDTO) {
 		
+
 		
-		userDTO.getUser().setPassword(passwordEncoder.encode(userDTO.getUser().getPassword()));
+		//userDTO.getUser().setPassword(passwordEncoder.encode(userDTO.getUser().getPassword()));
+
+		if(!(userDTO.getUser().getId() > 0)) {
+			userDTO.getUser().setPassword(Encrypt.encrypt(userDTO.getUser().getPassword()));
+		}
 		
 		User user = userService.saveOrUpdate(userDTO.getUser());
 		if(userDTO.getEmployeer() != null) {
@@ -78,6 +85,25 @@ public class PersonController {
 		
 		return user.getPerson();
 		
+	}
+	
+	@PostMapping("/people/changePassword")
+	public User changePassword(@RequestBody UserChangePasswordDTO userChangePasswordDTO){
+		User user = new User();
+		if(userChangePasswordDTO != null) {
+			user = userService.getOne(userChangePasswordDTO.getIdUser());
+		}
+		
+		if(user != null) {
+			String encryptedPassword = Encrypt.encrypt(userChangePasswordDTO.getOldPassword());
+			if(encryptedPassword.equals(user.getPassword())) {
+				user.setPassword(Encrypt.encrypt(userChangePasswordDTO.getPassword()));
+				userService.saveOrUpdate(user);
+			}else {
+				user = new User();
+			}
+		}
+		return user;
 	}
 	
 	@DeleteMapping("/people")
