@@ -39,4 +39,12 @@ public class VacancyService {
 		return vacancyRepo.getVacanciesByApplier(id);
 	}
 	
+	public List<Vacancy> getOnlyTheActiveOnes(){
+		return vacancyRepo.findByStatus(true);
+	}
+	
+	public List<Vacancy> getSharedVacancies(long id){
+		return vacancyRepo.getSharedVacancies(id);
+	}
+	
 }

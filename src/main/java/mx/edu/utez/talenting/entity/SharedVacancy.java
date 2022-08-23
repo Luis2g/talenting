@@ -55,5 +55,10 @@ public class SharedVacancy implements Serializable {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
+	@Override
+	public String toString() {
+		return "SharedVacancy [id=" + id + ", vacancy=" + vacancy + ", person=" + person + "]";
+	}
+	
 	
 }

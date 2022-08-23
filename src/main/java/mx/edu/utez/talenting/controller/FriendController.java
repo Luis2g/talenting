@@ -3,9 +3,11 @@ package mx.edu.utez.talenting.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import mx.edu.utez.talenting.service.FriendService;
 
 @RestController
 @RequestMapping("/talenting")
+@CrossOrigin(origins = "http://127.0.0.1:8081")
 public class FriendController {
 	
 	@Autowired
@@ -37,9 +40,24 @@ public class FriendController {
 		return friendSer.saveOrUpdate(friend);
 	}
 	
-	@DeleteMapping("/friends")
-	public void delete(@RequestParam("id") long id) {
+	@PostMapping("/sendFriendshipRequest")
+	public Friend sendFriendshipRequest(@RequestBody Friend friend) {
+		return friendSer.saveOrUpdate(friend);
+	}
+	
+	@DeleteMapping("/cancelFriendshipRequest")
+	public void delete(@RequestParam("requestId") long id) {
 		friendSer.remove(id);
+	}
+	
+	@PutMapping("/confirmFriendshipRequest")
+	public void confirmFriendshipRequest(@RequestParam("requestId") long id) {
+		friendSer.confirmFriendshipRequest(id);
+	}
+	
+	@DeleteMapping("/rejectFriendshipRequest")
+	public void rejectFriendshipRequest(@RequestParam("requestId") long id) {
+		friendSer.rejectFriendshipRequest(id);
 	}
 
 	

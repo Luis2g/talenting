@@ -8,4 +8,6 @@ import mx.edu.utez.talenting.entity.Employeer;
 @Repository
 public interface EmployeerRepository extends JpaRepository<Employeer, Long>{
 
+	Employeer findByPerson_id(long id);
+	
 }
