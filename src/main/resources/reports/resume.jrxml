@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resume" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cbb03d6e-ae34-496d-9027-73f169c22ec4">
+	<property name="ireport.zoom" value="1.5000000000000007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<parameter name="idResume" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT r.*, CONCAT(p.name, ' ',p.surname, ' ', p.second_surname) as completeName, p.date_of_birth,ci.* FROM resumes r
+    INNER JOIN people p on r.person = p.id
+    INNER JOIN contact_informations ci on p.contact_information = ci.id WHERE r.id = $P{idResume};]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdf_resume" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="expertise" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="has_experience" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="professional_description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="profile_image" class="java.awt.Image">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="school_preparation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="title" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="person" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="completeName" class="java.lang.String"/>
+	<field name="date_of_birth" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="phone_number" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="state" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="127" splitType="Stretch">
+			<image scaleImage="RetainShape" onErrorType="Blank">
+				<reportElement positionType="Float" x="5" y="6" width="110" height="110" uuid="5f1d1fbb-a95a-4d59-abcf-12ca8b8d171d"/>
+				<imageExpression><![CDATA[$F{profile_image}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="120" y="0" width="435" height="26" forecolor="#1D4578" uuid="1be5d086-acfe-4df2-9b9a-ba719bef926c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{completeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="31" width="435" height="42" forecolor="#5589C4" uuid="b6a914ec-0c3d-4414-a485-7c7d43c0c57a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+					<paragraph leftIndent="10" rightIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="76" width="435" height="40" forecolor="#666666" uuid="84258281-68a7-4892-ab0d-5c464ea395f0"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="10"/>
+					<paragraph leftIndent="10" rightIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{professional_description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="202" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="34" width="115" height="20" forecolor="#5589C4" uuid="a40d3da5-3cbf-4d7d-b0c6-ca92f1ba9cf3"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de nacimiento]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="54" width="115" height="14" forecolor="#666666" uuid="a07b64df-1759-4eed-98eb-d76f5869a301"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse($F{date_of_birth}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="88" width="115" height="16" forecolor="#666666" uuid="d45ac61f-093b-4b5b-9625-ff400595f05c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{state}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="34" width="435" height="57" forecolor="#666666" uuid="3a650a42-9c7d-4f3c-b069-eab7b226edf7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10" rightIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expertise}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="119" width="435" height="57" forecolor="#666666" uuid="fb0cf292-1fff-4b68-af72-d96a284b0307"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="10" rightIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{school_preparation}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="68" width="115" height="20" forecolor="#5589C4" uuid="cefe254c-0634-428b-8b88-97f597468d7f"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="104" width="115" height="20" forecolor="#5589C4" uuid="c1779d82-da83-45b5-804e-644aac6d1d23"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="124" width="115" height="16" forecolor="#666666" uuid="cbc95ea2-6b8e-46fc-975b-a95666126edc"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{phone_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="140" width="115" height="20" forecolor="#5589C4" uuid="e570208d-592b-47a7-8925-a12a4815a9a9"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Correo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="160" width="115" height="16" forecolor="#666666" uuid="fc93dd10-a889-46fa-853b-07eb623379eb"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="6" width="435" height="28" forecolor="#5589C4" uuid="f27aec50-7233-4efa-80e3-ff664bf8bd1f"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Experiencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="91" width="435" height="28" forecolor="#5589C4" uuid="4c5ee270-735e-465f-9a50-e9cae5a4a288"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[Preparación escolar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="6" width="115" height="28" forecolor="#666666" backcolor="#FFFFFF" uuid="4299d95a-2610-463c-961e-7d40c4dd41a5"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="16" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Información]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="5" width="115" height="1" uuid="ad1e013a-b548-4944-8fd4-181cf4283ed6"/>
+				<graphicElement>
+					<pen lineColor="#666666"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="129" y="5" width="415" height="1" uuid="f0ad3388-a7ef-4a27-a228-3e91a6045deb"/>
+				<graphicElement>
+					<pen lineColor="#666666"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="129" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="3" width="280" height="100" uuid="8e957869-7efe-4411-be42-5a3dc0387d28"/>
+				<subreportParameter name="idResume">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "languages.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="280" y="3" width="275" height="100" uuid="a134a55f-5457-4b7d-9c96-5e8454a8f0fd"/>
+				<subreportParameter name="idResume">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "skills.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="103">
+			<subreport>
+				<reportElement x="0" y="3" width="555" height="100" uuid="86e49f41-236c-4788-81c3-ec4808eac90a"/>
+				<subreportParameter name="idResume">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "certificationsOrCourses.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="45" forecolor="#666666" uuid="285f5dec-19c8-468d-bdbb-56b248e4c855"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[El sistema SIPET no se hace responsable de la transparencia de los datos del aspirante para el puesto que está solicitando, SIPET solo es el medio para que empleador y aplicante puedan comunicarse, la veracidad de los datos no puede ser comprobada por nosotros, para más detalles consulte nuestros términos de privacidad. ]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

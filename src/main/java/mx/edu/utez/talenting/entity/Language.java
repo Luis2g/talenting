@@ -2,8 +2,10 @@ package mx.edu.utez.talenting.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +31,7 @@ public class Language implements Serializable {
 	private String level;
 	
 	//Foreign key for resume
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "resume", nullable = false)
 	private Resume resume;
 
@@ -64,5 +66,12 @@ public class Language implements Serializable {
 	public void setResume(Resume resume) {
 		this.resume = resume;
 	}
+
+	@Override
+	public String toString() {
+		return "Language [id=" + id + ", name=" + name + ", level=" + level + "]";
+	}
+	
+	
 
 }
