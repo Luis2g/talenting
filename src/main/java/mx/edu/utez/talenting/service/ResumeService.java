@@ -82,6 +82,8 @@ public class ResumeService {
 			jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 			Map<String, Object> map = new HashMap();
 			map.put("idResume", idResume);
+			// IMPORTANTE
+			//Esto se configura en cada caomputadora que se valla a utilizar
 			map.put("SUBREPORT_DIR", "C:\\Repositorios\\Integradora 9\\talenting\\src\\main\\resources\\reports\\");
 			return JasperFillManager.fillReport(jasperReport, map,con);
 		}
