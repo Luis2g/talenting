@@ -29,8 +29,6 @@ import mx.edu.utez.talenting.service.FriendService;
 import mx.edu.utez.talenting.service.PersonService;
 import mx.edu.utez.talenting.service.UserService;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 @RestController
 @RequestMapping("/talenting")
 @CrossOrigin(origins = "http://127.0.0.1:8081")
@@ -60,18 +58,19 @@ public class PersonController {
 		return personSer.saveOrUpdate(person);
 	}
 	
-	@Autowired private PasswordEncoder passwordEncoder;
-	
 	@PostMapping("/people")
 	public Person save(@RequestBody UserDTO userDTO) {
 		
 
 		
+
 		//userDTO.getUser().setPassword(passwordEncoder.encode(userDTO.getUser().getPassword()));
 
 		if(!(userDTO.getUser().getId() > 0)) {
 			userDTO.getUser().setPassword(Encrypt.encrypt(userDTO.getUser().getPassword()));
 		}
+
+		userDTO.getUser().setPassword(Encrypt.encrypt(userDTO.getUser().getPassword()));
 		
 		User user = userService.saveOrUpdate(userDTO.getUser());
 		if(userDTO.getEmployeer() != null) {
