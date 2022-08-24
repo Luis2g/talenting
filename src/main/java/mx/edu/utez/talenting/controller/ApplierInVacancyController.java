@@ -73,7 +73,8 @@ public class ApplierInVacancyController {
 	@PostMapping("/sendNotification")
 	public void sendNotification(@RequestBody MailBodyDTO mail) {
 		System.out.println(mail.toString());
-		mailService.sendMail(mail.getTo(), mail.getSubject(), mail.getContent());
+		String content = mailService.template(mail);
+		mailService.sendMail(mail.getTo(), mail.getSubject(), content);
 	}
 
 	
