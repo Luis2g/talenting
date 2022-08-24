@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import mx.edu.utez.talenting.entity.Friend;
+import mx.edu.utez.talenting.entity.Person;
 
 
 @Repository
@@ -28,14 +29,6 @@ public interface FriendRepository extends JpaRepository<Friend, Long>{
 	@Query(value="DELETE FROM friends WHERE id = :idIn", nativeQuery=true)
 	void rejectFriendshipRequest(long idIn);
 	
-
-	@Query(value="SELECT F.* FROM people P INNER JOIN friends F ON P.id = F.person OR P.id = F.friend WHERE P.id IN(SELECT friend FROM friends WHERE (person = 1 OR friend = 1)  AND status = 1 );", nativeQuery=true)
-	List<Friend> getFriendsList(long personId);
-	
-	@Modifying
-	@Transactional
-	@Query(value="DELETE FROM friends WHERE (person = :personId AND friend = :friendId) OR (person = :friendId AND friend = :personId)", nativeQuery = true)
-	void deleteFriend(long personId, long friendId);
 	
 	
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import mx.edu.utez.talenting.entity.Friend;
-import mx.edu.utez.talenting.entity.Person;
 import mx.edu.utez.talenting.service.FriendService;
 
 @RestController
@@ -59,16 +58,6 @@ public class FriendController {
 	@DeleteMapping("/rejectFriendshipRequest")
 	public void rejectFriendshipRequest(@RequestParam("requestId") long id) {
 		friendSer.rejectFriendshipRequest(id);
-	}
-	
-	@GetMapping("/getFriends")
-	public List<Person> getFriendsList(@RequestParam("personId") long personId) {
-		return friendSer.getFriendsList(personId);
-	}
-	
-	@DeleteMapping("/deleteFriend")
-	public void deleteFriend(@RequestParam("personId") long personId, @RequestParam("friendId") long friendId) {
-		friendSer.deleteFriend(personId, friendId);
 	}
 
 	

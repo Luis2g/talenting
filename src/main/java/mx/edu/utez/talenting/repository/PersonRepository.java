@@ -32,10 +32,6 @@ public interface PersonRepository extends JpaRepository<Person, Long>{
 			+ "AND P.id NOT IN (( SELECT person FROM ( SELECT person FROM friends WHERE friend = :idIn AND status = 1 ) AS tableTwo )) AND P.id != :idIn AND EM.id IS NULL", nativeQuery=true)
 	List<Person> getPeopleToAddAsFriends(long idIn);
 	
-	@Query(value="SELECT * FROM people P WHERE P.id IN(( SELECT friend FROM ( SELECT friend FROM friends WHERE person = :personId AND status = 1 ) AS tableOne ))\r\n"
-			+ "OR P.id IN (( SELECT person FROM ( SELECT person FROM friends WHERE friend = :personId AND status = 1 ) AS tableTwo ))", nativeQuery=true)
-	List<Person> getFriendsList(long personId);
-	
 
 
 }

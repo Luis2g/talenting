@@ -34,8 +34,4 @@ public class EmployeerService {
 		employeerRepo.deleteById(id);
 	}
 	
-	public Employeer getOneByPersonId(long id) {
-		return employeerRepo.findByPersonId(id);
-	}
-	
 }
