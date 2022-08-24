@@ -1,5 +1,6 @@
 package mx.edu.utez.talenting.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import mx.edu.utez.talenting.dto.MailBodyDTO;
 import mx.edu.utez.talenting.entity.ApplierInVacancy;
 import mx.edu.utez.talenting.service.ApplierInVacancyService;
+import mx.edu.utez.talenting.service.MailService;
 
 @RestController
 @RequestMapping("/talenting")
@@ -24,6 +27,9 @@ public class ApplierInVacancyController {
 	
 	@Autowired
 	private ApplierInVacancyService applierInVacancySer;
+	
+	@Autowired
+	private MailService mailService;
 	
 	@GetMapping("/appliersInVacancies")
 	public List<ApplierInVacancy> list(){
@@ -58,12 +64,30 @@ public class ApplierInVacancyController {
 	@PostMapping("/changeAppliersStatus")
 	public int changeAppliersStatus(@RequestParam("status") String status, @RequestParam("id") long idApplier, @RequestParam("vacancy") long idVacancy) {
 		if(status.equals("Contratado")) {
+			List<ApplierInVacancy> listaPostuladosaVacantes = new LinkedList<>();
+			MailBodyDTO mail = new MailBodyDTO();
 			applierInVacancySer.declineAppliers(idVacancy , idApplier);
+			for(ApplierInVacancy applier: listaPostuladosaVacantes) {
+				if(applier.getStatus() != "Rechazado" && applier.getStatus() != "Contratado") {
+					mail.setTo(applier.getPerson().getContactInformation().getEmail());
+					mail.setSubject("Notificación Talenting");
+					mail.setContent("Tu solicitud para la vacante de la empresa "+applier.getVacancy().getEmployeer().getCompanyName()+" a la cual te has postulado, ha sido rechazada.");
+					String content = mailService.template(mail);
+					mailService.sendMail(mail.getTo(), mail.getSubject(), content);
+				}
+			}
 			applierInVacancySer.changeStatusToVacancy(idVacancy);
 			return applierInVacancySer.changeStatus(status, idApplier);
 		}else {
 			return applierInVacancySer.changeStatus(status, idApplier);	
 		}		
+	}
+	
+	@PostMapping("/sendNotification")
+	public void sendNotification(@RequestBody MailBodyDTO mail) {
+		System.out.println(mail.toString());
+		String content = mailService.template(mail);
+		mailService.sendMail(mail.getTo(), mail.getSubject(), content);
 	}
 
 	
