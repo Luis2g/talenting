@@ -26,6 +26,7 @@ import mx.edu.utez.talenting.entity.User;
 import mx.edu.utez.talenting.helper.Encrypt;
 import mx.edu.utez.talenting.service.EmployeerService;
 import mx.edu.utez.talenting.service.FriendService;
+import mx.edu.utez.talenting.service.MailService;
 import mx.edu.utez.talenting.service.PersonService;
 import mx.edu.utez.talenting.service.UserService;
 
@@ -60,10 +61,11 @@ public class PersonController {
 	
 	@PostMapping("/people")
 	public Person save(@RequestBody UserDTO userDTO) {
+
 		if(!(userDTO.getUser().getId() > 0)) {
 			userDTO.getUser().setPassword(Encrypt.encrypt(userDTO.getUser().getPassword()));
 		}
-		
+	
 		User user = userService.saveOrUpdate(userDTO.getUser());
 		if(userDTO.getEmployeer() != null) {
 			
