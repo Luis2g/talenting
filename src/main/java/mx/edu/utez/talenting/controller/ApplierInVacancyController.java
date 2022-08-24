@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import mx.edu.utez.talenting.dto.MailBodyDTO;
 import mx.edu.utez.talenting.entity.ApplierInVacancy;
 import mx.edu.utez.talenting.service.ApplierInVacancyService;
+import mx.edu.utez.talenting.service.MailService;
 
 @RestController
 @RequestMapping("/talenting")
@@ -24,6 +26,8 @@ public class ApplierInVacancyController {
 	
 	@Autowired
 	private ApplierInVacancyService applierInVacancySer;
+	@Autowired
+	private MailService mailService;
 	
 	@GetMapping("/appliersInVacancies")
 	public List<ApplierInVacancy> list(){
@@ -64,6 +68,13 @@ public class ApplierInVacancyController {
 		}else {
 			return applierInVacancySer.changeStatus(status, idApplier);	
 		}		
+	}
+	
+	@PostMapping("/sendNotification")
+	public void sendNotification(@RequestBody MailBodyDTO mail) {
+		System.out.println(mail.toString());
+		String content = mailService.template(mail);
+		mailService.sendMail(mail.getTo(), mail.getSubject(), content);
 	}
 
 	
