@@ -56,8 +56,14 @@ public class ApplierInVacancyController {
 	}
 	
 	@PostMapping("/changeAppliersStatus")
-	public int changeAppliersStatus(@RequestParam("status") String status, @RequestParam("id") long id) {
-		return applierInVacancySer.changeStatus(status, id);
+	public int changeAppliersStatus(@RequestParam("status") String status, @RequestParam("id") long idApplier, @RequestParam("vacancy") long idVacancy) {
+		if(status.equals("Contratado")) {
+			applierInVacancySer.declineAppliers(idVacancy , idApplier);
+			applierInVacancySer.changeStatusToVacancy(idVacancy);
+			return applierInVacancySer.changeStatus(status, idApplier);
+		}else {
+			return applierInVacancySer.changeStatus(status, idApplier);	
+		}		
 	}
 
 	
