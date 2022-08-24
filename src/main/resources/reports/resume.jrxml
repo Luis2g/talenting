@@ -71,8 +71,8 @@
 				<textFieldExpression><![CDATA[$F{completeName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="120" y="31" width="435" height="42" forecolor="#5589C4" uuid="b6a914ec-0c3d-4414-a485-7c7d43c0c57a"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
+				<reportElement x="120" y="31" width="435" height="35" forecolor="#5589C4" uuid="b6a914ec-0c3d-4414-a485-7c7d43c0c57a"/>
+				<textElement verticalAlignment="Middle">
 					<font size="13" isBold="true"/>
 					<paragraph leftIndent="10" rightIndent="10"/>
 				</textElement>
@@ -112,15 +112,15 @@
 				<textFieldExpression><![CDATA[$F{state}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="120" y="34" width="435" height="57" forecolor="#666666" uuid="3a650a42-9c7d-4f3c-b069-eab7b226edf7"/>
+				<reportElement x="120" y="119" width="435" height="57" forecolor="#666666" uuid="3a650a42-9c7d-4f3c-b069-eab7b226edf7"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font size="10"/>
 					<paragraph leftIndent="10" rightIndent="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{expertise}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{has_experience} ? $F{expertise} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="120" y="119" width="435" height="57" forecolor="#666666" uuid="fb0cf292-1fff-4b68-af72-d96a284b0307"/>
+				<reportElement x="120" y="34" width="435" height="57" forecolor="#666666" uuid="fb0cf292-1fff-4b68-af72-d96a284b0307"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font size="10"/>
 					<paragraph leftIndent="10" rightIndent="10"/>
@@ -163,7 +163,9 @@
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="120" y="6" width="435" height="28" forecolor="#5589C4" uuid="f27aec50-7233-4efa-80e3-ff664bf8bd1f"/>
+				<reportElement x="120" y="91" width="435" height="28" forecolor="#5589C4" uuid="f27aec50-7233-4efa-80e3-ff664bf8bd1f">
+					<printWhenExpression><![CDATA[$F{has_experience}]]></printWhenExpression>
+				</reportElement>
 				<textElement verticalAlignment="Bottom">
 					<font size="12" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -171,7 +173,7 @@
 				<text><![CDATA[Experiencia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="120" y="91" width="435" height="28" forecolor="#5589C4" uuid="4c5ee270-735e-465f-9a50-e9cae5a4a288"/>
+				<reportElement x="120" y="6" width="435" height="28" forecolor="#5589C4" uuid="4c5ee270-735e-465f-9a50-e9cae5a4a288"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="12" isBold="true"/>
 					<paragraph leftIndent="10"/>
