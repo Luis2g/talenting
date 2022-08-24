@@ -3,8 +3,6 @@ package mx.edu.utez.talenting.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,10 +46,21 @@ public class VacancyController {
 	private FavoriteVacancyService favoriteVacancySer;
 	
 	@GetMapping("/vacancies")
-	public List<VacancyDTO> list(@RequestParam("params") long id){
+	public List<VacancyDTO> list(@RequestParam("params") long id, @RequestParam("state")String state, @RequestParam("title")String title){
 		System.out.println("here's the params" + id);
 		
-		List<Vacancy> vacancies = vacancySer.getByEmployeer(new Employeer(id)); 
+		List<Vacancy> vacancies = vacancySer.getByEmployeer(new Employeer(id));
+		
+		if(state.equals("all") && title.equals("all")) {
+			vacancies = vacancySer.getByEmployeer(new Employeer(id));
+		}else if(!state.equals("all") && title.equals("all")){
+			vacancies = vacancySer.getByEmployeerAndState(new Employeer(id), state);
+		}else if(state.equals("all") && !title.equals("all")) {
+			vacancies = vacancySer.getByEmployeerAndTitle(new Employeer(id), title);
+		}else if(!state.equals("all") && !title.equals("all")) {
+			vacancies = vacancySer.getByEmployeerAndStateAndTitle(new Employeer(id), state, title);
+		}
+		
 		List<VacancyDTO> vacanciesDTO = new ArrayList<>();
 		
 		for(Vacancy vacancy: vacancies){
@@ -66,7 +75,7 @@ public class VacancyController {
 		
 		return vacanciesDTO;
 	}
-	@RolesAllowed("employeer")
+	
 	@GetMapping("/vacanciesByApplier")
 	public List<VacancyDTO> getVacanciesByApplier(@RequestParam("applierId") long id){
 		
@@ -160,8 +169,134 @@ public class VacancyController {
 		return vacanciesDTO;
 	}
 	
+	@GetMapping("/vacanciesAccordingToTitle")
+	public List<VacancyDTO> listAccordingToTitle(@RequestParam("userId") long id, @RequestParam("title") String title){
+		
+		List<Vacancy> vacancies = new ArrayList<>();
+		
+		vacancies = vacancySer.getAccordingToTitle(title);
+		 
+		List<VacancyDTO> vacanciesDTO = new ArrayList<>();
+		
+		for(Vacancy vacancy: vacancies){
+			
+			VacancyDTO vacancyDTOTemp = new VacancyDTO();
+			List<Benefit> benefits = benefitSer.getByVacancy(vacancy);
+			vacancyDTOTemp.setVacancy(vacancy);
+			vacancyDTOTemp.setRetrievedBenefits(benefits);
+			vacanciesDTO.add(vacancyDTOTemp);
+		}
+		
+				
+		if(id != 0) {
+			
+			Person person = new Person(id);
+			
+			List<ApplierInVacancy> appliersInVacancies = applierInVacancySer.findByPerson(person);
+			List<SharedVacancy> sharedVacancies = sharedVacancySer.findByPerson(person);
+			List<FavoriteVacancy> favoriteVacancies = favoriteVacancySer.findByPerson(person);
+			
+//			List<SharedVacancy> sharedVacancies = 
+			if(!appliersInVacancies.isEmpty()) {
+				for(ApplierInVacancy applierInVacancy: appliersInVacancies) {
+					for(VacancyDTO vacancyDTO: vacanciesDTO) {
+						if(vacancyDTO.getVacancy().getId() == applierInVacancy.getVacancy().getId()) {
+							vacancyDTO.setApplied(applierInVacancy.getId());
+							break;
+						}
+					}				
+				}
+			}
+			if(!sharedVacancies.isEmpty()) {
+				for(SharedVacancy sharedVacancy: sharedVacancies) {
+					for(VacancyDTO vacancyDTO: vacanciesDTO) {
+						if(sharedVacancy.getVacancy().getId() == vacancyDTO.getVacancy().getId()) {
+							vacancyDTO.setShared(sharedVacancy.getId());
+							break;
+						}
+					}				
+				}
+			}
+			if(!favoriteVacancies.isEmpty()) {
+				for(FavoriteVacancy favoriteVacancy: favoriteVacancies) {
+					for(VacancyDTO vacancyDTO: vacanciesDTO) {
+						if(favoriteVacancy.getVacancy().getId() == vacancyDTO.getVacancy().getId()) {
+							vacancyDTO.setFavorite(favoriteVacancy.getId());
+							break;
+						}
+					}				
+				}
+			}
+		}
+		
+		return vacanciesDTO;
+	}
 	
-	@RolesAllowed("employeer")
+	@GetMapping("/vacanciesAccordingToTitleAndState")
+	public List<VacancyDTO> listAccordingToTitleAndState(@RequestParam("userId") long id, @RequestParam("title") String title, @RequestParam("state") String state){
+		
+		List<Vacancy> vacancies = new ArrayList<>();
+		
+		vacancies = vacancySer.getAccordingToTitleAndState(title, state);
+		 
+		List<VacancyDTO> vacanciesDTO = new ArrayList<>();
+		
+		for(Vacancy vacancy: vacancies){
+			
+			VacancyDTO vacancyDTOTemp = new VacancyDTO();
+			List<Benefit> benefits = benefitSer.getByVacancy(vacancy);
+			vacancyDTOTemp.setVacancy(vacancy);
+			vacancyDTOTemp.setRetrievedBenefits(benefits);
+			vacanciesDTO.add(vacancyDTOTemp);
+		}
+		
+				
+		if(id != 0) {
+			
+			Person person = new Person(id);
+			
+			List<ApplierInVacancy> appliersInVacancies = applierInVacancySer.findByPerson(person);
+			List<SharedVacancy> sharedVacancies = sharedVacancySer.findByPerson(person);
+			List<FavoriteVacancy> favoriteVacancies = favoriteVacancySer.findByPerson(person);
+			
+//			List<SharedVacancy> sharedVacancies = 
+			if(!appliersInVacancies.isEmpty()) {
+				for(ApplierInVacancy applierInVacancy: appliersInVacancies) {
+					for(VacancyDTO vacancyDTO: vacanciesDTO) {
+						if(vacancyDTO.getVacancy().getId() == applierInVacancy.getVacancy().getId()) {
+							vacancyDTO.setApplied(applierInVacancy.getId());
+							break;
+						}
+					}				
+				}
+			}
+			if(!sharedVacancies.isEmpty()) {
+				for(SharedVacancy sharedVacancy: sharedVacancies) {
+					for(VacancyDTO vacancyDTO: vacanciesDTO) {
+						if(sharedVacancy.getVacancy().getId() == vacancyDTO.getVacancy().getId()) {
+							vacancyDTO.setShared(sharedVacancy.getId());
+							break;
+						}
+					}				
+				}
+			}
+			if(!favoriteVacancies.isEmpty()) {
+				for(FavoriteVacancy favoriteVacancy: favoriteVacancies) {
+					for(VacancyDTO vacancyDTO: vacanciesDTO) {
+						if(favoriteVacancy.getVacancy().getId() == vacancyDTO.getVacancy().getId()) {
+							vacancyDTO.setFavorite(favoriteVacancy.getId());
+							break;
+						}
+					}				
+				}
+			}
+		}
+		
+		return vacanciesDTO;
+	}
+	
+	
+	
 	@GetMapping("/vacancies/{id}")
 	public Vacancy edit(@PathVariable("id") long id) {
 		return vacancySer.getOne(id);
@@ -184,13 +319,11 @@ public class VacancyController {
 		return vacancySer.saveOrUpdate(vacancyDTO.getVacancy());
 	}
 	
-	@RolesAllowed("employeer")
 	@PutMapping("/vacancies/changeStatus")
 	public Vacancy changeStatus(@RequestBody Vacancy vacancy) {
 		return vacancySer.saveOrUpdate(vacancy);
 	}
 	
-	@RolesAllowed("employeer")
 	@PostMapping("/vacancies")
 	public Vacancy save(@RequestBody VacancyDTO vacancyDTO) {
 		System.out.println("This is the vacancy " + vacancyDTO);
@@ -209,7 +342,6 @@ public class VacancyController {
 		return savedVacancy;
 	}
 	
-	@RolesAllowed("employeer")
 	@DeleteMapping("/vacancies")
 	public void delete(@RequestParam("id") long id) {
 		vacancySer.remove(id);

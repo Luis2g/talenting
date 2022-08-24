@@ -7,5 +7,7 @@ import mx.edu.utez.talenting.entity.Resume;
 
 @Repository
 public interface ResumeRepository extends JpaRepository<Resume, Long>{
+	
+	public Resume findByPersonId(long id);
 
 }

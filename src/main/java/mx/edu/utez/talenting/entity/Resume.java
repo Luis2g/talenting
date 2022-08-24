@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -41,6 +42,14 @@ public class Resume implements Serializable {
 	@Column(name = "school_preparation", nullable = false)
 	private String school_preparation;
 	
+	@Lob
+	@Column(name = "profile_image", nullable = true)
+	private byte[] profileImage;
+	
+	@Lob
+	@Column(name = "pdf_resume", nullable = true)
+	private byte[] PDFResume;
+	
 	//Configuration for cetifications or courses
 	@OneToMany(mappedBy = "resume")
 	@JsonIgnore
@@ -60,6 +69,111 @@ public class Resume implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "person")
 	private Person person;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getProfessionalDescription() {
+		return professionalDescription;
+	}
+
+	public void setProfessionalDescription(String professionalDescription) {
+		this.professionalDescription = professionalDescription;
+	}
+
+	public boolean isHasExperience() {
+		return hasExperience;
+	}
+
+	public void setHasExperience(boolean hasExperience) {
+		this.hasExperience = hasExperience;
+	}
+
+	public String getExpertise() {
+		return expertise;
+	}
+
+	public void setExpertise(String expertise) {
+		this.expertise = expertise;
+	}
+
+	public String getSchool_preparation() {
+		return school_preparation;
+	}
+
+	public void setSchool_preparation(String school_preparation) {
+		this.school_preparation = school_preparation;
+	}
+
+	public byte[] getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(byte[] profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	public byte[] getPDFResume() {
+		return PDFResume;
+	}
+
+	public void setPDFResume(byte[] pDFResume) {
+		PDFResume = pDFResume;
+	}
+
+	public List<CertificationOrCourse> getCertificationOrCourse() {
+		return certificationOrCourse;
+	}
+
+	public void setCertificationOrCourse(List<CertificationOrCourse> certificationOrCourse) {
+		this.certificationOrCourse = certificationOrCourse;
+	}
+
+	public List<Skill> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+
+	public List<Language> getLaguagues() {
+		return laguagues;
+	}
+
+	public void setLaguagues(List<Language> laguagues) {
+		this.laguagues = laguagues;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	@Override
+	public String toString() {
+		return "Resume [id=" + id + ", title=" + title + ", professionalDescription=" + professionalDescription
+				+ ", hasExperience=" + hasExperience + ", expertise=" + expertise + ", school_preparation="
+				+ school_preparation + ", laguagues=" + laguagues + "]";
+	}
+
+	
 	
 	
 	
