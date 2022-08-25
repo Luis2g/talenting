@@ -29,6 +29,13 @@ public interface FriendRepository extends JpaRepository<Friend, Long>{
 	@Query(value="DELETE FROM friends WHERE id = :idIn", nativeQuery=true)
 	void rejectFriendshipRequest(long idIn);
 	
-	
+	@Modifying
+	@Transactional
+	@Query(value="DELETE FROM friends WHERE (person = :personId AND friend = :friendId) OR (person = :friendId AND friend = :personId)", nativeQuery = true)
+	void deleteFriend(long personId, long friendId);
+
+	@Query(value="SELECT * FROM people P WHERE P.id IN(( SELECT friend FROM ( SELECT friend FROM friends WHERE person = :personId AND status = 1 ) AS tableOne ))\r\n"
+			+ "OR P.id IN (( SELECT person FROM ( SELECT person FROM friends WHERE friend = :personId AND status = 1 ) AS tableTwo ))", nativeQuery=true)
+	List<Person> getFriendsList(long personId);
 	
 }

@@ -43,4 +43,12 @@ public class ApplierInVacancyService {
 		return applierInVacancyRepository.changeStatus(status, id);
 	}
 	
+	public int declineAppliers(long idVacancy, long idApplier) {		
+		return applierInVacancyRepository.changeStatusToOthers(idVacancy, idApplier);
+	}
+	
+	public int changeStatusToVacancy(long idVacancy) {		
+		return applierInVacancyRepository.changeStatusToVacancy(idVacancy);
+	}
+	
 }

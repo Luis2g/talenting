@@ -31,7 +31,9 @@ public class EmployeerController {
 	
 	@GetMapping("/employeers")
 	public Employeer edit(@RequestParam("personId") long id) {
-		return employeerSer.getOne(id);
+		System.out.println("el parametro es : "  + id);
+		
+		return employeerSer.findByPerson(id);
 	}
 	
 	@PutMapping("/employeers")

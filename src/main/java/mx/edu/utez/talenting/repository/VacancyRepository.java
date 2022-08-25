@@ -17,9 +17,16 @@ public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
 	
 	List<Vacancy> findByEmployeer (Employeer employeer);
 	
+	List<Vacancy> findByEmployeerAndStateInWhichIsAvailable (Employeer employeer, String state);
+	
+	List<Vacancy> findByEmployeerAndTitleContaining(Employeer employeer, String title);
+	
+	List<Vacancy> findByEmployeerAndStateInWhichIsAvailableAndTitleContaining(Employeer employeer, String state, String title);
+	
 	List<Vacancy> findByStateInWhichIsAvailableAndStatus(String state, boolean value);
 	
 	List<Vacancy> findByStatus(boolean value);
+	
 	
 	@Modifying
 	@Transactional
@@ -36,5 +43,14 @@ public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
 			+ "			OR P.id = :idIn GROUP BY V.id;", nativeQuery=true)
 	List<Vacancy> getSharedVacancies(long idIn);
 	
+	@Modifying
+	@Transactional
+	@Query(value="SELECT * FROM vacancies WHERE title LIKE %:title% AND status = :value", nativeQuery=true)
+	List<Vacancy> getFilterVacancies(String title, boolean value);
+	
+	@Modifying
+	@Transactional
+	@Query(value="SELECT * FROM vacancies WHERE state_in_which_is_available = :state AND title LIKE %:title% AND status = :value", nativeQuery=true)
+	List<Vacancy> getFilterVacancies(String title, String state, boolean value);
 	
 }
