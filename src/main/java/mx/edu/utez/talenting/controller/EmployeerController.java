@@ -45,6 +45,11 @@ public class EmployeerController {
 	public void delete(@RequestParam("id") long id) {
 		employeerSer.remove(id);
 	}
+	
+	@GetMapping("/employeersByPersonId/{id}")
+	public Employeer edit2(@PathVariable("id") long id) {
+		return employeerSer.getOneByPersonId(id);
+	}
 
 	
 }
